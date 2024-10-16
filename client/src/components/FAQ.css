@@ -1,0 +1,300 @@
+.faq {
+  align-items: center;
+  background-color: var(--token-08250336-7ddd-4922-9cb9-81197485932e, #fafafa);
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 8px;
+  height: min-content;
+  justify-content: flex-start;
+  overflow: visible;
+  padding: 80px 72px 160px;
+  position: relative;
+  width: 100%;
+  margin-top: -50px;
+
+  border-color: rgb(249, 249, 249);
+  border-style: solid;
+  border-top-width: 1px;
+  border-bottom-width: 0;
+  border-right-width: 0;
+
+  border-left-width: 0;
+  background-color: black;
+}
+.faq-container {
+  align-items: center;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 64px;
+  height: min-content;
+  justify-content: flex-start;
+  max-width: 1000px;
+  overflow: visible;
+  padding: 0;
+  position: relative;
+  width: 100%;
+}
+.both-faq-container {
+  align-items: flex-start;
+  display: flex;
+  flex: none;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 16px;
+  height: min-content;
+  justify-content: flex-start;
+  /* max-width: 1000px; */
+  overflow: visible;
+  padding: 0;
+  position: relative;
+  margin-top: -80px;
+  width: 100%;
+}
+.left-faq {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 16px;
+  height: min-content;
+  justify-content: flex-start;
+  overflow: visible;
+  padding: 0;
+  position: relative;
+  width: 100%;
+  opacity: 1;
+}
+.left-faq-container {
+  width: 60%;
+}
+.ques-div {
+  align-items: center;
+  display: flex;
+  flex: none;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 32px;
+  height: min-content;
+  justify-content: center;
+  overflow: visible;
+  padding: 16px 30px;
+
+  position: relative;
+  width: 100%;
+}
+.ques-container {
+  border-bottom-width: 2px;
+  border-color: rgb(64, 64, 64);
+  border-left-width: 2px;
+  border-right-width: 2px;
+  border-style: solid;
+  border-top-width: 2px;
+  background-color: rgb(10, 10, 10);
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: none;
+  opacity: 1;
+  margin: 10px 0;
+}
+.ques-ques {
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  transform: none;
+  opacity: 1;
+  flex: 1 0 0px;
+  height: auto;
+  position: relative;
+  white-space: pre-wrap;
+  /* width: 1px; */
+  word-break: break-word;
+  word-wrap: break-word;
+}
+.ques-text {
+}
+.plus-container {
+  align-items: center;
+  display: flex;
+  flex: none;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 10px;
+  justify-content: center;
+  overflow: visible;
+  padding: 10px;
+  border-radius: 50%;
+  position: relative;
+  height: 32px;
+  width: 32px;
+  background-color: #2b2828;
+}
+.plus {
+  color: white;
+  font-size: 20px;
+  padding-bottom: 5px;
+}
+.right-faq {
+  align-items: center;
+  background-color: var(--token-9c2f9650-7ca3-46db-8137-b7111f91eba2, #0a0a0a);
+  border-radius: 20px;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  /* gap: 16px; */
+  height: 320px;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0 16px 16px;
+  position: relative;
+  width: 30%;
+}
+.book-pic-container {
+  aspect-ratio: 1 / 1;
+  flex: none;
+  height: var(--framer-aspect-ratio-supported, 150px);
+  position: relative;
+  width: 150px;
+}
+
+.book-pic-text-container {
+  align-items: center;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 16px;
+  height: min-content;
+  justify-content: center;
+  overflow: visible;
+  padding: 0;
+  position: relative;
+  width: 100%;
+}
+
+.book-para-text {
+  font-family: "Manrope", "Manrope Placeholder", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 32px;
+  alignment: center;
+  color: rgb(10, 10, 10);
+}
+.book-call-btn-div {
+  align-items: center;
+  background-color: #262626;
+  border-radius: 20px;
+  box-shadow: inset 0 -4px #00000040;
+  display: flex;
+  flex: none;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 12px;
+  height: min-content;
+  justify-content: center;
+  overflow: hidden;
+  padding: 16px 32px;
+  position: relative;
+  text-decoration: none;
+  width: 100%;
+  color: white;
+}
+
+.book-call-btn {
+  font-family: "Manrope", "Manrope Placeholder", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 28px;
+  text-decoration: none;
+  white-space: pre;
+  alignment: center;
+  color: rgb(249, 249, 249);
+}
+.faqques-container {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 10px 0;
+  padding: 10px;
+  cursor: pointer;
+
+  border-bottom-width: 2px;
+  border-color: rgb(64, 64, 64);
+  border-left-width: 2px;
+  border-right-width: 2px;
+  border-style: solid;
+  border-top-width: 2px;
+  background-color: rgb(10, 10, 10);
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: none;
+  opacity: 1;
+  margin: 10px 0;
+}
+
+.question-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.question {
+  font-family: "Manrope", "Manrope Placeholder", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 150%;
+  color: white;
+}
+
+.toggle-button {
+  color: white;
+  font-size: 20px;
+  padding-bottom: 5px;
+  font-weight: bolder;
+}
+
+.answer {
+  margin-top: 10px;
+  color: #a3a3a3;
+}
+
+@media (min-width: 810px) and (max-width: 1199px) {
+  .faq {
+    padding: 64px 32px 128px;
+  }
+  .both-faq-container {
+    flex-direction: column;
+  }
+  .left-faq,
+  .right-faq,
+  .left-faq-container {
+    width: 100%;
+  }
+  .ques-container {
+    /* width: 970px; */
+  }
+}
+
+@media (max-width: 809px) {
+  .faq {
+    padding: 72px 16px;
+  }
+  .left-faq,
+  .right-faq,
+  .left-faq-container {
+    width: 100%;
+  }
+  .both-faq-container {
+    flex-direction: column;
+  }
+}

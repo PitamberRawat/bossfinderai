@@ -1,0 +1,131 @@
+.testi-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 1200px;
+  width: 100%;
+  gap: 64px;
+  position: relative;
+}
+.testi-head-section {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  width: 100%;
+  height: min-content;
+  align-items: center;
+}
+.testi-text-container {
+  padding: 5px 12px;
+  border-radius: 15px;
+  background-color: rgb(33, 33, 33);
+  color: #ebebeb;
+  font-family: "Manrope", "Manrope Placeholder", sans-serif;
+}
+.testi-big-text {
+  align-items: center;
+  text-align: center;
+  font-family: "Manrope", "Manrope Placeholder", sans-serif;
+  color: white;
+  font-size: 42px;
+  letter-spacing: -0.011px;
+}
+
+.rating-div {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+}
+.images-section {
+  width: 100%;
+  position: relative;
+  position: relative;
+  overflow: hidden;
+  height: 850px;
+  transition: height 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.pic-one {
+  width: calc(33.3333% - 8px);
+  /* width: 500px; */
+  margin-bottom: 12px;
+  position: absolute;
+  top: 0px;
+  visibility: visible;
+  will-change: transform;
+  left: 0px;
+  opacity: 1;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: transform, opacity;
+}
+.two {
+  transform: translate(403px, 0px) scale(1);
+}
+.three {
+  transform: translate(805px, 0px) scale(1);
+}
+.four {
+  transform: translate(0px, 305px) scale(1);
+}
+
+.button {
+  box-shadow: rgb(249, 249, 249) 0px 4px 0px 0px;
+  will-change: auto;
+  opacity: 1;
+  transform: none;
+  border-bottom-width: 2px;
+  /* border-color: var(--token-9c2f9650-7ca3-46db-8137-b7111f91eba2, #0a0a0a); */
+  border-color: rgb(249, 249, 249);
+  border-left-width: 2px;
+  border-right-width: 2px;
+  border-style: solid;
+  border-top-width: 2px;
+  align-content: center;
+  align-items: center;
+  background-color: #0a0a0a;
+  border-radius: 16px;
+  box-shadow: 0 4px #f9f9f9;
+  display: flex;
+  flex: none;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 12px;
+  height: min-content;
+  justify-content: center;
+  overflow: hidden;
+  padding: 12px 24px;
+  position: relative;
+  text-decoration: none;
+  width: 210px;
+}
+.btn-text {
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  font-family: "Manrope", "Manrope Placeholder", sans-serif;
+}
+
+@media (max-width: 1199px) {
+  .images-section {
+    height: 1300px;
+  }
+  .two {
+    transform: translate(0px, 280px) scale(1);
+  }
+  .three {
+    transform: translate(805px, 0px) scale(1);
+  }
+  .four {
+    transform: translate(0px, 905px) scale(1);
+  }
+  .pic-one {
+    width: 300px;
+  }
+  .testi-big-text {
+    font-size: 30px;
+  }
+}

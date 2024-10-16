@@ -1,0 +1,21 @@
+.li-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 10px;
+  height: 320px;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  width: min-content;
+}
+
+.brand-container {
+  /* aspect-ratio: ; */
+  flex: none;
+  height: 40px;
+  overflow: visible;
+  position: relative;
+}

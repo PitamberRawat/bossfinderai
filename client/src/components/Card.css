@@ -1,0 +1,40 @@
+.card {
+  background-color: #1f1f1f;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  height: 100%;
+}
+
+.person-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.name {
+  color: #fff;
+}
+.stars {
+  margin: -6px 2px;
+}
+
+.person-info img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.person-info .name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.review {
+  font-size: 16px;
+  color: #fff;
+}

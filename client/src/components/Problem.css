@@ -1,0 +1,109 @@
+.problem-div {
+  align-items: center;
+  display: flex;
+  flex: 1 0 0px;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 1px;
+  height: min-content;
+  justify-content: flex-start;
+  overflow: visible;
+  /* padding: 0 32px; */
+  position: relative;
+  width: 100%;
+}
+.text-section {
+  display: flex;
+  /* flex: none; */
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 8px;
+  height: min-content;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  padding: 0;
+  position: relative;
+  width: 100%;
+}
+
+.text-divvv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* word-break: break-word;
+  word-wrap: break-word; */
+  text-align: center;
+}
+.text-section-heading {
+  color: rgb(255, 255, 255);
+  font-family: "Manrope", "Manrope Placeholder", sans-serif;
+  /* font-size: 16px; */
+  font-weight: 700;
+  line-height: 150%;
+  letter-spacing: 0.01em;
+}
+
+.text-section-para {
+  font-family: "Manrope", "Manrope Placeholder", sans-serif;
+  color: rgb(163, 163, 163);
+  align-items: center;
+  align-self: center;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: -0.4px;
+}
+
+.heading-container {
+  position: relative; /* Set the container as a reference for positioning */
+  display: inline-block;
+}
+
+.background-text {
+  position: absolute;
+  top: -195px; /* Move the numbers slightly above the heading */
+  left: 30px;
+  z-index: 1; /* Places the numbers behind the heading */
+  font-size: 12rem; /* Make the numbers large */
+  color: rgba(255, 255, 255, 0.16);
+  font-weight: bolder; /* Light color for background effect */
+}
+
+.heading-text {
+  position: relative;
+  z-index: 1; /* Ensures heading is above the background text */
+  font-size: 2rem; /* Normal heading size */
+}
+.point-div {
+  align-items: center;
+  display: flex;
+  flex: none;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 8px;
+  height: min-content;
+  justify-content: flex-start;
+  overflow: visible;
+  padding: 0;
+  position: relative;
+  width: 100%;
+}
+.bullet-point {
+  font-size: 32px;
+  margin-top: -8px;
+}
+.point-text {
+  font-family: "Manrope", "Manrope Placeholder", sans-serif;
+  font-weight: 500;
+  /* overflow-wrap: break-word; */
+  /* word-wrap: break-word; */
+  line-height: 24px;
+  color: rgb(10, 10, 10);
+}
+
+@media (max-width: 1199px) {
+  .arrow-img {
+    display: none;
+  }
+}
