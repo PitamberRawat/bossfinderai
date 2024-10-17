@@ -621,7 +621,7 @@ export default function Signin() {
                   </div>
                 </div>
                 <a
-                  onClick={() => checkout()}
+                  onClick={() => navigate("/checkoutpage")}
                   href=""
                   className="btn-anchor"
                   style={{ backgroundColor: "white" }}
@@ -722,7 +722,11 @@ export default function Signin() {
                   <Pointdiv point="Unlimited AI Email Copy: Coming Soon" />
                 </div>
               </div>
-              <a onClick={() => checkout()} href="" className="btn-anchor">
+              <a
+                onClick={() => navigate("/checkoutpage")}
+                href=""
+                className="btn-anchor"
+              >
                 <p className="btn-secure-para">Get Started </p>
                 <span className="arrow-right">→</span>
               </a>
