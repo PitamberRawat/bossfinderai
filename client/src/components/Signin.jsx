@@ -38,24 +38,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "./config/firebase";
 
-const items = [
-  {
-    id: 1,
-    plan: "normal",
-    price: 3,
-  },
-  {
-    id: 2,
-    plan: "standard",
-    price: 19,
-  },
-  {
-    id: 3,
-    plan: "premium",
-    price: 49,
-  },
-];
-
 export default function Signin() {
   const navigate = useNavigate();
 
@@ -69,29 +51,29 @@ export default function Signin() {
   const setIsLogin = location.state?.setIsLogin || true;
   console.log(userData);
 
-  const checkout = async () => {
-    try {
-      const response = await fetch("https://localhost:4000/checkout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ items: items }),
-      });
+  // const checkout = async () => {
+  //   try {
+  //     const response = await fetch("https://localhost:4000/checkout", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ items: items }),
+  //     });
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
+  //     if (!response.ok) {
+  //       throw new Error("Network response was not ok");
+  //     }
 
-      const data = await response.json();
-      if (data.url) {
-        window.location.assign(data.url);
-      }
-    } catch (error) {
-      console.error("Error during checkout:", error);
-      alert("Checkout failed. Please try again."); // User feedback
-    }
-  };
+  //     const data = await response.json();
+  //     if (data.url) {
+  //       window.location.assign(data.url);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error during checkout:", error);
+  //     alert("Checkout failed. Please try again."); // User feedback
+  //   }
+  // };
 
   const handleResetPassword = () => {
     toast({
@@ -533,7 +515,11 @@ export default function Signin() {
                     {/* <Pointdiv point="Delivery Time: 30 Mins" /> */}
                   </div>
                 </div>
-                <a href="" className="btn-anchor" onClick={() => checkout()}>
+                <a
+                  href=""
+                  className="btn-anchor"
+                  onClick={() => navigate("/checkoutpage")}
+                >
                   <p className="btn-secure-para">Get Started </p>
                   <span className="arrow-right">→</span>
                 </a>
