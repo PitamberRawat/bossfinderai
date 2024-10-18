@@ -4,6 +4,8 @@ import { FaCheckCircle } from "react-icons/fa";
 
 const Success = () => {
   const [sessionData, setSessionData] = useState(null);
+  const [error, setError] = useState(null); // State for error handling
+  const [loading, setLoading] = useState(true); // State for loading status
   const location = useLocation();
 
   useEffect(() => {
@@ -12,14 +14,27 @@ const Success = () => {
 
     // Fetch session details from the server
     if (sessionId) {
-      fetch(`http://localhost:5000/checkout-session?sessionId=${sessionId}`)
-        .then((response) => response.json())
+      fetch(
+        `https://bossfinderai.netlify.app/checkout-session?sessionId=${sessionId}`
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to fetch session details");
+          }
+          return response.json();
+        })
         .then((data) => {
           setSessionData(data); // Store session data in state
         })
         .catch((error) => {
           console.error("Error fetching session details:", error);
+          setError(error.message); // Set the error state
+        })
+        .finally(() => {
+          setLoading(false); // Update loading status
         });
+    } else {
+      setLoading(false); // No session ID found
     }
   }, [location]);
 
@@ -36,7 +51,11 @@ const Success = () => {
           <FaCheckCircle style={styles.icon} />
         </div>
         <h1 style={styles.title}>Payment Successful!</h1>
-        {sessionData ? (
+        {loading ? (
+          <p style={styles.text}>Loading your payment details...</p>
+        ) : error ? (
+          <p style={styles.errorText}>Error: {error}</p> // Show error message
+        ) : (
           <>
             <p style={styles.text}>
               Thank you for your purchase, {sessionData.customer_details.email}.
@@ -45,8 +64,6 @@ const Success = () => {
               You have been charged ${sessionData.amount_total / 100}.
             </p>
           </>
-        ) : (
-          <p style={styles.text}>Loading your payment details...</p>
         )}
         <a
           href="/"
@@ -71,7 +88,7 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: "100%",
+    height: "100vh", // Use vh for full height
     background: "linear-gradient(135deg, #81c784, #4caf50)",
     fontFamily: "'Arial', sans-serif",
     margin: 0,
@@ -84,7 +101,8 @@ const styles = {
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
     textAlign: "center",
     maxWidth: "400px",
-    width: "100%",
+    width: "90%", // Use percentage for responsiveness
+    margin: "0 auto", // Center the card horizontally
   },
   icon: {
     color: "#4caf50",
@@ -98,6 +116,11 @@ const styles = {
   },
   text: {
     color: "#666",
+    fontSize: "16px",
+    marginBottom: "20px",
+  },
+  errorText: {
+    color: "red", // Highlight error messages
     fontSize: "16px",
     marginBottom: "20px",
   },

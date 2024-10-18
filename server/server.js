@@ -13,7 +13,9 @@ app.use(bodyParser.json());
 // Endpoint to fetch checkout session details
 app.get("/checkout-session", async (req, res) => {
   const { sessionId } = req.query; // Get session ID from query parameters
-
+  if (!sessionId) {
+    return res.status(400).send({ error: "Session ID is required" });
+  }
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
     res.json(session); // Send session details as JSON
