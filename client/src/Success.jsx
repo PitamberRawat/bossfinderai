@@ -15,7 +15,7 @@ const Success = () => {
     // Fetch session details from the server
     if (sessionId) {
       fetch(
-        `https://bossfinderai.netlify.app/checkout-session?sessionId=${sessionId}`
+        `https://bossfinderai.onrender.com/checkout-session?sessionId=${sessionId}`
       )
         .then((response) => {
           if (!response.ok) {
