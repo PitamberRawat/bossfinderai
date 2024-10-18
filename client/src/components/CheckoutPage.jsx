@@ -33,7 +33,7 @@ const App = () => {
     const stripe = await stripePromise;
 
     const response = await fetch(
-      "http://localhost:5000/create-checkout-session",
+      "https://bossfinderai.onrender.com/create-checkout-session",
       {
         method: "POST",
         headers: {
