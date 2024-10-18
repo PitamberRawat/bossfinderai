@@ -1,6 +1,8 @@
 import React from "react";
 import "./Pricing.css";
+import { useNavigate } from "react-router-dom";
 const Pricing = () => {
+  const navigate = useNavigate();
   return (
     <div className="pricing" id="pricing">
       <div className="pricing-container">
@@ -109,7 +111,11 @@ const Pricing = () => {
                     {/* <Pointdiv point="Delivery Time: 30 Mins" /> */}
                   </div>
                 </div>
-                <a href="" className="btn-anchor">
+                <a
+                  onClick={() => navigate("/checkoutpage")}
+                  href=""
+                  className="btn-anchor"
+                >
                   <p className="btn-secure-para">Get Started </p>
                   <span className="arrow-right">→</span>
                 </a>
@@ -211,6 +217,7 @@ const Pricing = () => {
                   </div>
                 </div>
                 <a
+                  onClick={() => navigate("/checkoutpage")}
                   href=""
                   className="btn-anchor"
                   style={{ backgroundColor: "white" }}
@@ -311,7 +318,11 @@ const Pricing = () => {
                   <Pointdiv point="Unlimited AI Email Copy: Coming Soon" />
                 </div>
               </div>
-              <a href="" className="btn-anchor">
+              <a
+                onClick={() => navigate("/checkoutpage")}
+                href=""
+                className="btn-anchor"
+              >
                 <p className="btn-secure-para">Get Started </p>
                 <span className="arrow-right">→</span>
               </a>
