@@ -7,11 +7,7 @@ require("dotenv").config();
 const app = express();
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY); // Ensure this environment variable is set
 
-app.use(
-  cors({
-    origin: "https://bossfinderai.netlify.app",
-  })
-);
+app.use(cors());
 app.use(bodyParser.json());
 
 // Endpoint to fetch checkout session details
