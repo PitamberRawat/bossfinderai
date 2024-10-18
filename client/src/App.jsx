@@ -5,6 +5,7 @@ import Signin from "./components/Signin";
 import Success from "./Success";
 import Cancel from "./Cancel";
 import CheckoutPage from "./components/CheckoutPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   return (
@@ -13,7 +14,14 @@ const App = () => {
         <Route path="/" element={<Homepage />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/signin" element={<Signin />} />
-        <Route path="/checkoutpage" element={<CheckoutPage />} />
+        <Route
+          path="/checkoutpage"
+          element={
+            <ProtectedRoute>
+              <CheckoutPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/success" element={<Success />} />
         <Route path="/cancel" element={<Cancel />} />
       </Routes>

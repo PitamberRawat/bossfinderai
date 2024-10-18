@@ -3,6 +3,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import basic from "../assets/basic.png";
 import standard from "../assets/standard.png";
 import premium from "../assets/premium.png";
+import "./checkoutpage.css";
 
 const stripePromise = loadStripe(
   "pk_test_51Q1A3MRw8r3Vx2XaZ5foTvPbqzA9mHzHXhpuCHUglltHjhIYMb5FxY0q1gJLwsJOV9PzBypVzw2MARd7UBl5Euih00TQGsoMiD"
@@ -66,58 +67,42 @@ const CheckoutPage = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <h1 style={styles.heading}>Select a Product</h1>
-      <div style={{ display: "flex", gap: "20px" }}>
-        <img
-          src={selectedProduct.image}
-          alt={selectedProduct.name}
-          style={styles.productImage}
-        />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <ul style={styles.productList}>
-            {products.map((product) => (
-              <li key={product.id} style={styles.productItem}>
-                <button
-                  style={{
-                    ...styles.productButton,
-                    backgroundColor:
-                      selectedProduct.id === product.id ? "#4CAF50" : "#f0f0f0",
-                    color: selectedProduct.id === product.id ? "#fff" : "#333",
-                  }}
-                  onClick={() => setSelectedProduct(product)}
-                >
-                  {product.name}
-                </button>
-              </li>
-            ))}
-          </ul>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "column",
-            }}
-          >
-            <h2 style={styles.selectedProduct}>
-              Selected Product: {selectedProduct.name}
-            </h2>
-
-            <button style={styles.checkoutButton} onClick={handleCheckout}>
-              Checkout
-            </button>
+    <>
+      <div className="container">
+        <h1 className="heading">Select a Product</h1>
+        <div className="product-wrapper">
+          <img
+            src={selectedProduct.image}
+            alt={selectedProduct.name}
+            className="product-image"
+          />
+          <div className="product-details">
+            <ul className="product-list">
+              {products.map((product) => (
+                <li key={product.id} className="product-item">
+                  <button
+                    className={`product-button ${
+                      selectedProduct.id === product.id ? "active" : ""
+                    }`}
+                    onClick={() => setSelectedProduct(product)}
+                  >
+                    {product.name}
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <div className="selected-details">
+              <h2 className="selected-product">
+                Selected Product: {selectedProduct.name}
+              </h2>
+              <button className="checkout-button" onClick={handleCheckout}>
+                Checkout
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
