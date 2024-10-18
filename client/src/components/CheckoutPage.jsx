@@ -32,7 +32,7 @@ const products = [
   },
 ];
 
-const App = () => {
+const CheckoutPage = () => {
   const [selectedProduct, setSelectedProduct] = useState(products[0]); // Default to the first product
 
   const handleCheckout = async () => {
@@ -175,4 +175,4 @@ const styles = {
   },
 };
 
-export default App;
+export default CheckoutPage;
