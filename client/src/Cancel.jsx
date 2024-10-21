@@ -35,7 +35,7 @@ const Cancel = () => {
         </p>
         <p style={styles.paragraph}>
           You can return to our{" "}
-          <a href="/" style={styles.link}>
+          <a onClick={() => navigate("/signin")} style={styles.link}>
             homepage
           </a>{" "}
           to continue browsing.

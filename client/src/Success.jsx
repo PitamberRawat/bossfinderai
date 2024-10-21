@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FaCheckCircle } from "react-icons/fa";
 
 const Success = () => {
@@ -7,6 +7,7 @@ const Success = () => {
   const [error, setError] = useState(null); // State for error handling
   const [loading, setLoading] = useState(true); // State for loading status
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
@@ -66,7 +67,7 @@ const Success = () => {
           </>
         )}
         <a
-          href="/"
+          onClick={() => navigate("/signin")}
           style={styles.button}
           onMouseEnter={(e) =>
             (e.target.style.backgroundColor =

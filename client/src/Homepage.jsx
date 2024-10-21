@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { register, login, logout } from "./components/config/auth";
 import "./App.css";
 import Avatar from "./components/Avatar";
@@ -60,6 +60,8 @@ import cross from "../src/assets/cross.svg";
 import Card from "./components/Card";
 import AuthPage from "./components/AuthPage";
 import Signin from "./components/Signin";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./components/config/firebase";
 
 const review = [
   {
@@ -121,7 +123,21 @@ const review = [
 const Homepage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  //const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userDetailsData, setUserDetailsData] = useState(null);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUserDetailsData(currentUser);
+        navigate("/signin"); // Redirect to the Buy component if the user is logged in
+      } else {
+        userDetailsData(null);
+        navigate("/");
+      }
+    });
+    return () => unsubscribe();
+  }, [navigate]);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -135,28 +151,28 @@ const Homepage = () => {
     }
   };
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      await login(email, password);
-      setIsLoggedIn(true);
-      alert("Login successful!");
-    } catch (error) {
-      console.error("Login error:", error);
-      alert(error.message);
-    }
-  };
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     await login(email, password);
+  //     setIsLoggedIn(true);
+  //     alert("Login successful!");
+  //   } catch (error) {
+  //     console.error("Login error:", error);
+  //     alert(error.message);
+  //   }
+  // };
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-      setIsLoggedIn(false);
-      alert("Logged out successfully!");
-    } catch (error) {
-      console.error("Logout error:", error);
-      alert(error.message);
-    }
-  };
+  // const handleLogout = async () => {
+  //   try {
+  //     await logout();
+  //     setIsLoggedIn(false);
+  //     alert("Logged out successfully!");
+  //   } catch (error) {
+  //     console.error("Logout error:", error);
+  //     alert(error.message);
+  //   }
+  // };
 
   const svg = (
     <svg
@@ -176,7 +192,7 @@ const Homepage = () => {
       <line x1="9" y1="9" x2="15" y2="15"></line>
     </svg>
   );
-  const navigate = useNavigate();
+
   return (
     <>
       <div className="containerrr">

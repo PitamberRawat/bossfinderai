@@ -51,30 +51,6 @@ export default function Signin() {
   const setIsLogin = location.state?.setIsLogin || true;
   console.log(userData);
 
-  // const checkout = async () => {
-  //   try {
-  //     const response = await fetch("https://localhost:4000/checkout", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ items: items }),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error("Network response was not ok");
-  //     }
-
-  //     const data = await response.json();
-  //     if (data.url) {
-  //       window.location.assign(data.url);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error during checkout:", error);
-  //     alert("Checkout failed. Please try again."); // User feedback
-  //   }
-  // };
-
   const handleResetPassword = () => {
     toast({
       title: "Password Reset Requested",
@@ -279,8 +255,8 @@ export default function Signin() {
   return (
     <>
       <div
-        className="flex h-full  text-white font-inter"
-        style={{ backgroundColor: "rgb(17,24,39" }}
+        className="flex h-full w-full  text-white font-inter"
+        style={{ backgroundColor: "rgb(17,24,39", width: "100%" }}
       >
         {/* Navigation Sidebar */}
         <nav className="w-64 bg-gray-900 p-4 border-r border-gray-800">
@@ -338,7 +314,6 @@ export default function Signin() {
             display: "flex",
             flexDirection: "column",
             backgroundColor: "rgb(17,24,39)",
-            width: "100%",
           }}
         >
           {/* Main Content Area */}
@@ -732,8 +707,8 @@ export default function Signin() {
               </a>
             </div>
           </div>
+          <TelegramChat />
         </div>
-        <TelegramChat />
       </div>
     </>
   );
