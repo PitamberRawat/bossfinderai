@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { auth, db } from "./config/firebase"; // Ensure this path is correct
-import { getFirestore, addDoc, collection, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  addDoc,
+  collection,
+  getDocs,
+  doc,
+  setDoc,
+} from "firebase/firestore";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -40,20 +47,53 @@ export default function AuthPage() {
   const db = getFirestore();
   const collectionRef = collection(db, "users");
 
+  // const saveDataToFirebase = async () => {
+  //   try {
+  //     // Check if the user is authenticated
+  //     const user = auth.currentUser;
+  //     if (!user) {
+  //       console.error("User is not authenticated. Cannot save data.");
+  //       return;
+  //     }
+
+  //     // Add data to the Firestore collection
+  //     const docRef = await addDoc(collectionRef, {
+  //       credits: credits,
+  //       email: email,
+  //       name: name,
+  //       plan: plan,
+  //     });
+  //     console.log("Document written with ID: ", docRef.id);
+  //   } catch (err) {
+  //     console.error("Error adding document: ", err);
+  //   }
+  // };
   const saveDataToFirebase = async () => {
     try {
-      const docRef = await addDoc(collectionRef, {
+      // Check if the user is authenticated
+      const user = auth.currentUser;
+      if (!user) {
+        console.error("User is not authenticated. Cannot save data.");
+        return;
+      }
+
+      // Use the user's UID as the document ID
+      const userDocRef = doc(collectionRef, user.uid);
+
+      // Add data to the Firestore document
+      await setDoc(userDocRef, {
         credits: credits,
         email: email,
         name: name,
         plan: plan,
       });
-      console.log(email, name, plan, credits);
+      console.log(
+        "Document successfully written with the user's UID as the document ID."
+      );
     } catch (err) {
-      console.error(err);
+      console.error("Error adding document: ", err);
     }
   };
-
   useEffect(() => {
     const getUserData = async () => {
       try {
@@ -75,18 +115,14 @@ export default function AuthPage() {
     setError("");
 
     if (isLogin) {
-      // Firebase login logic
       try {
         await signInWithEmailAndPassword(auth, email, password);
         alert("Login successful!");
-        navigate("/signin", {
-          state: { userData: userData },
-        });
+        navigate("/signin", { state: { userData: userData } });
       } catch (error) {
         setError("Incorrect email or password. Please try again.");
       }
     } else {
-      // Firebase signup logic
       if (password !== confirmPassword) {
         setError("Passwords do not match.");
         return;
@@ -97,14 +133,14 @@ export default function AuthPage() {
       }
       try {
         await createUserWithEmailAndPassword(auth, email, password);
-        const user = auth.currentUser;
-        // Save user data to Firestore
-        await saveDataToFirebase(); // Save user data on signup
+        // Call saveDataToFirebase function after signup is successful
+        await saveDataToFirebase();
         alert(
           "Signup successful! Please check your email to verify your account."
         );
         setIsLogin(true);
       } catch (error) {
+        console.error("Error during signup:", error);
         setError("Error during signup. Please try again.");
       }
     }

@@ -451,7 +451,7 @@ export default function Signin() {
                           textDecoration: "line-through",
                         }}
                       >
-                        $5
+                        $10
                       </span>
                     </div>
                     <div

@@ -132,7 +132,7 @@ const Homepage = () => {
         setUserDetailsData(currentUser);
         navigate("/signin"); // Redirect to the Buy component if the user is logged in
       } else {
-        userDetailsData(null);
+        setUserDetailsData(null);
         navigate("/");
       }
     });
@@ -182,9 +182,9 @@ const Homepage = () => {
       viewBox="0 0 24 24"
       fill="none"
       stroke="rgb(102, 102, 255)"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       style="width: 100%; height: 100%;"
     >
       <circle cx="12" cy="12" r="10"></circle>
@@ -216,16 +216,12 @@ const Homepage = () => {
               alignItems: "center",
             }}
           >
-            <div className="blank"></div>
+            <div></div>
             <img
+              onClick={() => navigate("/")}
               src={logo}
               alt=""
-              width="200px"
-              style={{
-                marginBottom: "-120px",
-                marginLeft: "120px",
-                marginTop: "-80px",
-              }}
+              className="bfa-home-logo"
             />
             <div style={{ display: "flex", gap: "4px" }}>
               <button
@@ -322,7 +318,12 @@ const Homepage = () => {
                 </div>
 
                 <div className="button-section">
-                  <a className="claim-button-top">
+                  <a
+                    onClick={() => {
+                      navigate("/auth");
+                    }}
+                    className="claim-button-top"
+                  >
                     {/* <div className="btnimgcon">
                       <img
                         height="100%"
@@ -519,10 +520,10 @@ const Homepage = () => {
                     height="24"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="rgb(102, 102, 255)"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     style={{
                       width: "100px",
                       height: "100px",
@@ -544,10 +545,10 @@ const Homepage = () => {
                     height="24"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="rgb(102, 102, 255)"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     style={{
                       width: "100px",
                       height: "100px",
@@ -570,10 +571,10 @@ const Homepage = () => {
                     height="24"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="rgb(102, 102, 255)"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     style={{
                       width: "100px",
                       height: "100px",

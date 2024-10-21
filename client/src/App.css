@@ -284,6 +284,13 @@
   font-weight: 700;
   font-family: "Fuzzy Bubbles";
 }
+.bfa-home-logo {
+  margin-bottom: -120px;
+  margin-left: 120px;
+  margin-top: -80px;
+  width: 200px;
+  z-index: 100;
+}
 .auth-btn {
   align-items: center;
   background-color: white;
@@ -590,7 +597,7 @@
     gap: 48px;
   }
   .hero-section {
-    padding: 48px 32px 0;
+    padding: 48px 32px 12px;
   }
   .paraOne {
     font-size: 20px;
@@ -617,7 +624,7 @@
 
 @media (max-width: 809px) {
   .hero-section {
-    padding: 48px 16px 100px;
+    padding: 48px 16px 25px;
   }
   .btnimgcon {
     width: 28px;
@@ -661,8 +668,15 @@
   }
 }
 
-@media (max-width: 480px) {
-  .launcher {
-    display: none;
+@media (max-width: 500px) {
+  .bfa-home-logo {
+    width: 150px;
+    margin-left: 0;
+  }
+  .auth-btn {
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 12px;
   }
 }
