@@ -34,8 +34,15 @@ const products = [
 ];
 
 const CheckoutPage = () => {
+  const auth = getAuth(); // Get the Firebase auth instance
+  const user = auth.currentUser;
   const [selectedProduct, setSelectedProduct] = useState(products[0]); // Default to the first product
+  if (!user) {
+    console.error("No user is logged in");
+    return;
+  }
 
+  const userId = user.uid;
   const handleCheckout = async () => {
     const stripe = await stripePromise;
 
@@ -49,6 +56,7 @@ const CheckoutPage = () => {
         body: JSON.stringify({
           priceId: selectedProduct.priceId,
           billingType: selectedProduct.billingType,
+          userId: userId,
         }), // Send the selected product's price ID
       }
     );
