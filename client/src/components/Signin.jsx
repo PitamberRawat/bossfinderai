@@ -35,7 +35,7 @@ import { Progress } from "@/components/ui/progress";
 import { Pointdiv } from "./Pricing";
 import TelegramChat from "./TelegramChat";
 import { useLocation, useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth, db } from "./config/firebase";
 
 import { ToastContainer, toast } from "react-toastify"; // Import toast and container
@@ -58,7 +58,7 @@ export default function Signin() {
     });
   };
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchUserData = async (userId) => {
       try {
         // If user data is passed via state (first-time login), use that
         if (location.state && location.state.user) {
@@ -82,8 +82,20 @@ export default function Signin() {
       }
     };
 
-    fetchUserData();
-  }, [location.state]);
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        // If the user is logged in, fetch the user data from Firestore
+        fetchUserData(currentUser.uid);
+      } else {
+        // If no user is logged in, redirect to the login page or show a message
+        setLoading(false);
+        navigate("/"); // Redirect to home or login page
+      }
+    });
+
+    // Cleanup the listener when the component unmounts
+    return () => unsubscribe();
+  }, [location.state, navigate]);
   console.log(detailsOfUser);
 
   const handleLogout = async () => {
