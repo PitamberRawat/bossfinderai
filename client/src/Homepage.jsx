@@ -121,59 +121,7 @@ const review = [
 ];
 
 const Homepage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  //const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userDetailsData, setUserDetailsData] = useState(null);
   const navigate = useNavigate();
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUserDetailsData(currentUser);
-        navigate("/signin"); // Redirect to the Buy component if the user is logged in
-      } else {
-        setUserDetailsData(null);
-        navigate("/");
-      }
-    });
-    return () => unsubscribe();
-  }, [navigate]);
-
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    try {
-      await register(email, password);
-      setIsLoggedIn(true);
-      alert("Registration successful!");
-    } catch (error) {
-      console.error("Registration error:", error);
-      alert(error.message);
-    }
-  };
-
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     await login(email, password);
-  //     setIsLoggedIn(true);
-  //     alert("Login successful!");
-  //   } catch (error) {
-  //     console.error("Login error:", error);
-  //     alert(error.message);
-  //   }
-  // };
-
-  // const handleLogout = async () => {
-  //   try {
-  //     await logout();
-  //     setIsLoggedIn(false);
-  //     alert("Logged out successfully!");
-  //   } catch (error) {
-  //     console.error("Logout error:", error);
-  //     alert(error.message);
-  //   }
-  // };
-
   const svg = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -226,14 +174,11 @@ const Homepage = () => {
             <div style={{ display: "flex", gap: "4px" }}>
               <button
                 className="auth-btn"
-                onClick={() => navigate("/auth", { state: { isLogin: false } })}
+                onClick={() => navigate("/register")}
               >
                 Sign up
               </button>
-              <button
-                className="auth-btn"
-                onClick={() => navigate("/auth", { state: { isLogin: true } })}
-              >
+              <button className="auth-btn" onClick={() => navigate("/login")}>
                 Log in
               </button>
             </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -38,19 +38,17 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "./config/firebase";
 
+import { ToastContainer, toast } from "react-toastify"; // Import toast and container
+import "react-toastify/dist/ReactToastify.css";
+
 export default function Signin() {
   const navigate = useNavigate();
-
-  const [name, setName] = useState("John Doe");
+  const location = useLocation(); // Get the location object
+  const { user } = location.state || {}; // Destructure user from state
+  const [name, setName] = useState(user.name);
   const [bossLink, setBossLink] = useState("");
   const [showThankYou, setShowThankYou] = useState(false);
   const [activeSection, setActiveSection] = useState("dashboard");
-  const location = useLocation();
-
-  const userData = location.state?.userData || [];
-  const setIsLogin = location.state?.setIsLogin || true;
-  console.log(userData);
-
   const handleResetPassword = () => {
     toast({
       title: "Password Reset Requested",
@@ -59,11 +57,10 @@ export default function Signin() {
   };
 
   const handleLogout = async () => {
-    console.log("hello");
-
     try {
       await signOut(auth);
       // setIsLogin(false);
+      toast.success("Logged Out");
       navigate("/");
     } catch (err) {
       console.log(err);
@@ -92,8 +89,8 @@ export default function Signin() {
                 <CreditCard className="h-4 w-4 text-purple-300" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">1,234</div>
-                <p className="text-xs text-purple-300">Next refill in 3 days</p>
+                <div className="text-2xl font-bold">{user.credits}</div>
+                {/* <p className="text-xs text-purple-300">Next refill in 3 days</p> */}
                 <Progress
                   value={70}
                   className="mt-2 bg-purple-950"
@@ -254,6 +251,7 @@ export default function Signin() {
 
   return (
     <>
+      <ToastContainer />
       <div
         className="flex h-full w-full  text-white font-inter"
         style={{ backgroundColor: "rgb(17,24,39", width: "100%" }}

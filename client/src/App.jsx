@@ -12,7 +12,8 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/register" element={<AuthPage isLoginn={false} />} />
+        <Route path="/login" element={<AuthPage isLoginn={true} />} />
         <Route path="/signin" element={<Signin />} />
         <Route
           path="/checkoutpage"

@@ -5,13 +5,14 @@ import {
   getFirestore,
   addDoc,
   collection,
-  getDocs,
+  getDoc,
   doc,
   setDoc,
 } from "firebase/firestore";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  onAuthStateChanged,
   sendPasswordResetEmail,
   signOut,
 } from "firebase/auth";
@@ -26,156 +27,143 @@ import { Eye, EyeOff, ArrowRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ToastContainer, toast } from "react-toastify"; // Import toast and container
+import "react-toastify/dist/ReactToastify.css";
 
-export default function AuthPage() {
+export default function AuthPage({ isLoginn }) {
   const location = useLocation();
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(location.state?.isLogin || false);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [credits, setCredits] = useState(0);
-  const [plan, setPlan] = useState("normal");
-  const [userData, setUserData] = useState([]); // Initial state for userData
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isLogin, setIsLogin] = useState(isLoginn);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
   const [forgotPasswordSubmitted, setForgotPasswordSubmitted] = useState(false);
 
-  const db = getFirestore();
-  const collectionRef = collection(db, "users");
-
-  // const saveDataToFirebase = async () => {
-  //   try {
-  //     // Check if the user is authenticated
-  //     const user = auth.currentUser;
-  //     if (!user) {
-  //       console.error("User is not authenticated. Cannot save data.");
-  //       return;
-  //     }
-
-  //     // Add data to the Firestore collection
-  //     const docRef = await addDoc(collectionRef, {
-  //       credits: credits,
-  //       email: email,
-  //       name: name,
-  //       plan: plan,
-  //     });
-  //     console.log("Document written with ID: ", docRef.id);
-  //   } catch (err) {
-  //     console.error("Error adding document: ", err);
-  //   }
-  // };
-  const saveDataToFirebase = async () => {
+  const handleLogin = async () => {
+    setError("");
     try {
-      // Check if the user is authenticated
-      const user = auth.currentUser;
-      if (!user) {
-        console.error("User is not authenticated. Cannot save data.");
-        return;
-      }
-
-      // Use the user's UID as the document ID
-      const userDocRef = doc(collectionRef, user.uid);
-
-      // Add data to the Firestore document
-      await setDoc(userDocRef, {
-        credits: credits,
-        email: email,
-        name: name,
-        plan: plan,
-      });
-      console.log(
-        "Document successfully written with the user's UID as the document ID."
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
       );
+      toast.success("Login Successfull");
+      const user = userCredential.user;
+
+      // Fetch user details from Firestore
+      const userData = await fetchUserDetails(user.uid);
+
+      navigate("/signin", { state: { user: userData } });
+
+      setEmail(""); // Clear input after successful login
+      setPassword("");
+      // Handle post-login actions here, e.g., redirect to dashboard
     } catch (err) {
-      console.error("Error adding document: ", err);
+      setError(err.message);
+      toast.error("Login error:", err);
+    }
+  };
+
+  // Function to handle registration
+  const handleRegister = async () => {
+    setError("");
+
+    // Check if passwords match
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters long.");
+      return;
+    }
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      // Add the newly registered user to Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        name: name,
+        email: email,
+        credits: 0, // Default credits value
+        plan: "free", // Default plan value
+      });
+      toast.success("Signup Successsfull ");
+      const userData = await fetchUserDetails(user.uid); // Await the user data
+
+      // Navigate to UserDetails component and pass user data
+      navigate("/signin", { state: { user: userData } });
+      setEmail(""); // Clear input after successful login
+      setPassword("");
+      setConfirmPassword("");
+      setName("");
+      // Handle post-registration actions here, e.g., save first name, redirect to dashboard
+    } catch (err) {
+      setError(err.message);
+      toast.error("Registration error:", err);
+    }
+  };
+
+  const fetchUserDetails = async (uid) => {
+    try {
+      const userDoc = await getDoc(doc(db, "users", uid));
+      if (userDoc.exists()) {
+        return userDoc.data(); // Store fetched data in state
+      } else {
+        toast.error("No such document!");
+        return null;
+      }
+    } catch (error) {
+      toast.error("Error fetching user details:", error);
+    }
+  };
+  // Form submission handler
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isLogin) {
+      handleLogin();
+    } else {
+      handleRegister();
     }
   };
   useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const data = await getDocs(collectionRef);
-        const filteredData = data.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
-        setUserData(filteredData);
-      } catch (err) {
-        console.log(err);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        fetchUserDetails(user.uid); // Fetch user details if already logged in
       }
-    };
-    getUserData();
+    });
+    return () => unsubscribe();
   }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+  // const handleForgotPassword = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     await sendPasswordResetEmail(auth, forgotPasswordEmail);
+  //     setForgotPasswordSubmitted(true);
+  //     alert("Password reset link has been sent to your email.");
+  //   } catch (error) {
+  //     setError("Error sending password reset link. Please try again.");
+  //   }
+  // };
 
-    if (isLogin) {
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        alert("Login successful!");
-        navigate("/signin", { state: { userData: userData } });
-      } catch (error) {
-        setError("Incorrect email or password. Please try again.");
-      }
-    } else {
-      if (password !== confirmPassword) {
-        setError("Passwords do not match.");
-        return;
-      }
-      if (password.length < 8) {
-        setError("Password must be at least 8 characters long.");
-        return;
-      }
-      try {
-        await createUserWithEmailAndPassword(auth, email, password);
-        // Call saveDataToFirebase function after signup is successful
-        await saveDataToFirebase();
-        alert(
-          "Signup successful! Please check your email to verify your account."
-        );
-        setIsLogin(true);
-      } catch (error) {
-        console.error("Error during signup:", error);
-        setError("Error during signup. Please try again.");
-      }
-    }
-  };
-
-  const handleForgotPassword = async (e) => {
-    e.preventDefault();
-    try {
-      await sendPasswordResetEmail(auth, forgotPasswordEmail);
-      setForgotPasswordSubmitted(true);
-      alert("Password reset link has been sent to your email.");
-    } catch (error) {
-      setError("Error sending password reset link. Please try again.");
-    }
-  };
-
-  const resetForgotPassword = () => {
-    setForgotPasswordEmail("");
-    setForgotPasswordSubmitted(false);
-  };
-
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      alert("Logged out successfully!");
-      setIsLogin(false);
-      navigate("/"); // Redirect to the homepage or login page after logout
-    } catch (error) {
-      console.error("Logout error:", error);
-      alert("Error logging out. Please try again.");
-    }
-  };
+  // const resetForgotPassword = () => {
+  //   setForgotPasswordEmail("");
+  //   setForgotPasswordSubmitted(false);
+  // };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black text-white p-4">
+      <ToastContainer />
       <div className="w-full max-w-md space-y-8">
         <div className="text-center">
           <h2 className="mt-6 text-3xl font-bold">
@@ -257,7 +245,6 @@ export default function AuthPage() {
           <div>
             <Button
               type="submit"
-              onClick={!isLogin && saveDataToFirebase}
               className="w-full bg-white text-black hover:bg-gray-200"
             >
               {isLogin ? "Sign In" : "Sign Up"}
