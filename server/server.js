@@ -8,7 +8,7 @@ require("dotenv").config();
 const app = express();
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY); // Ensure this environment variable is set
 
-const serviceAccount = JSON.parse(process.env.FIREBASE_ADMIN_SDK_JSON);
+const serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 // Initialize Firebase Admin SDK
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount), // Ensure you have set your Firebase credentials
