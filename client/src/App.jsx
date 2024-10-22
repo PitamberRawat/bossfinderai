@@ -14,6 +14,7 @@ const App = () => {
         <Route path="/" element={<Homepage />} />
         <Route path="/register" element={<AuthPage isLoginn={false} />} />
         <Route path="/login" element={<AuthPage isLoginn={true} />} />
+        <Route path="/auth" element={<AuthPage />} />
         <Route path="/signin" element={<Signin />} />
         <Route
           path="/checkoutpage"
