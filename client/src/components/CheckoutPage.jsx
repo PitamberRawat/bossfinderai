@@ -4,6 +4,7 @@ import basic from "../assets/basic.png";
 import standard from "../assets/standard.png";
 import premium from "../assets/premium.png";
 import "./checkoutpage.css";
+import { auth } from "./config/firebase";
 
 const stripePromise = loadStripe(
   "pk_test_51Q1A3MRw8r3Vx2XaZ5foTvPbqzA9mHzHXhpuCHUglltHjhIYMb5FxY0q1gJLwsJOV9PzBypVzw2MARd7UBl5Euih00TQGsoMiD"
@@ -34,7 +35,7 @@ const products = [
 ];
 
 const CheckoutPage = () => {
-  const auth = getAuth(); // Get the Firebase auth instance
+  // Get the Firebase auth instance
   const user = auth.currentUser;
   const [selectedProduct, setSelectedProduct] = useState(products[0]); // Default to the first product
   if (!user) {

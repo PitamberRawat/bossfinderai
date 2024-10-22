@@ -122,6 +122,20 @@ const review = [
 
 const Homepage = () => {
   const navigate = useNavigate();
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        console.log("User is logged in:", currentUser);
+        navigate("/signin");
+      } else {
+        console.log("User is not logged in");
+        navigate("/");
+      }
+    });
+
+    // Clean up the subscription
+    return () => unsubscribe();
+  }, [navigate]);
   const svg = (
     <svg
       xmlns="http://www.w3.org/2000/svg"

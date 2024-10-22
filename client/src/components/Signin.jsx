@@ -36,18 +36,20 @@ import { Pointdiv } from "./Pricing";
 import TelegramChat from "./TelegramChat";
 import { useLocation, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
-import { auth } from "./config/firebase";
+import { auth, db } from "./config/firebase";
 
 import { ToastContainer, toast } from "react-toastify"; // Import toast and container
 import "react-toastify/dist/ReactToastify.css";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function Signin() {
   const navigate = useNavigate();
-  const location = useLocation(); // Get the location object
-  const { user } = location.state || {}; // Destructure user from state
-  const [name, setName] = useState(user.name);
+  const location = useLocation();
+  const [detailsOfUser, setDetailsOfUser] = useState(null);
+  const [name, setName] = useState("jhon doe");
   const [bossLink, setBossLink] = useState("");
   const [showThankYou, setShowThankYou] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState("dashboard");
   const handleResetPassword = () => {
     toast({
@@ -55,6 +57,34 @@ export default function Signin() {
       description: "Check your email for further instructions.",
     });
   };
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        // If user data is passed via state (first-time login), use that
+        if (location.state && location.state.user) {
+          setDetailsOfUser(location.state.user);
+          setLoading(false);
+        } else {
+          // Fetch user data from Firestore
+          const userRef = doc(db, "users", auth.currentUser.uid);
+          const userSnap = await getDoc(userRef);
+
+          if (userSnap.exists()) {
+            setDetailsOfUser(userSnap.data());
+          } else {
+            console.log("No such user document!");
+          }
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, [location.state]);
+  console.log(detailsOfUser);
 
   const handleLogout = async () => {
     try {
@@ -76,6 +106,13 @@ export default function Signin() {
     });
   };
 
+  if (loading) {
+    return <div>Loading...</div>; // Show loading indicator while fetching data
+  }
+
+  if (!detailsOfUser) {
+    return <div>No user data available.</div>; // Handle case when no user data is found
+  }
   const renderContent = () => {
     switch (activeSection) {
       case "dashboard":
@@ -89,7 +126,9 @@ export default function Signin() {
                 <CreditCard className="h-4 w-4 text-purple-300" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{user.credits}</div>
+                <div className="text-2xl font-bold">
+                  {detailsOfUser.credits}
+                </div>
                 {/* <p className="text-xs text-purple-300">Next refill in 3 days</p> */}
                 <Progress
                   value={70}
