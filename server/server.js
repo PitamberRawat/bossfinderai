@@ -8,9 +8,12 @@ require("dotenv").config();
 const app = express();
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY); // Ensure this environment variable is set
 
+const serviceAccount = require(process.env.GOOGLE_APPLICATION_CREDENTIALS);
+
 // Initialize Firebase Admin SDK
 admin.initializeApp({
-  credential: admin.credential.applicationDefault(), // Ensure you have set your Firebase credentials
+  credential: admin.credential.cert(serviceAccount), // Ensure you have set your Firebase credentials
+  databaseURL: "https://bossfinderai.firebaseio.com",
 });
 
 app.use(cors());
