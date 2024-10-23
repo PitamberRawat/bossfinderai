@@ -8,12 +8,12 @@ require("dotenv").config();
 const app = express();
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY); // Ensure this environment variable is set
 
-const serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
+//const serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 // Initialize Firebase Admin SDK
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount), // Ensure you have set your Firebase credentials
-  databaseURL: "https://bossfinderai.firebaseio.com",
-});
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount), // Ensure you have set your Firebase credentials
+//   databaseURL: "https://bossfinderai.firebaseio.com",
+//});
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -86,7 +86,7 @@ app.post(
         const amountReceived = session.amount_total; // Total amount in cents
 
         // Update Firestore based on the amount
-        await updateCredits(userId, amountReceived);
+        // await updateCredits(userId, amountReceived);
         break;
       // Handle other event types as needed
       default:
@@ -98,27 +98,27 @@ app.post(
 );
 
 // Function to update credits in Firestore
-async function updateCredits(userId, amount) {
-  let creditsToAdd = 0;
+// async function updateCredits(userId, amount) {
+//   let creditsToAdd = 0;
 
-  // Determine credits based on the amount received
-  if (amount === 300) {
-    // Example price ID for $50
-    creditsToAdd = 5;
-  } else if (amount === 1900) {
-    // Example price ID for $30
-    creditsToAdd = 50;
-  } else if (amount === 4900) {
-    // Example price ID for $10
-    creditsToAdd = 50;
-  }
+//   // Determine credits based on the amount received
+//   if (amount === 300) {
+//     // Example price ID for $3
+//     creditsToAdd = 5;
+//   } else if (amount === 1900) {
+//     // Example price ID for $19
+//     creditsToAdd = 50;
+//   } else if (amount === 4900) {
+//     // Example price ID for $49
+//     creditsToAdd = 50;
+//   }
 
-  // Update the Firestore user's credits
-  const userRef = admin.firestore().collection("users").doc(userId);
-  await userRef.update({
-    credits: admin.firestore.FieldValue.increment(creditsToAdd),
-  });
-}
+//   // Update the Firestore user's credits
+//   const userRef = admin.firestore().collection("users").doc(userId);
+//   await userRef.update({
+//     credits: admin.firestore.FieldValue.increment(creditsToAdd),
+//   });
+// }
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
