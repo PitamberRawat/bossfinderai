@@ -15,8 +15,20 @@ admin.initializeApp({
   databaseURL: "https://bossfinderai.firebaseio.com",
 });
 
-app.use(cors());
-app.use(bodyParser.json());
+app.use((req, res, next) => {
+  if (req.originalUrl === "/webhook") {
+    next(); // Skip CORS for the webhook
+  } else {
+    cors()(req, res, next); // Use CORS for all other routes
+  }
+});
+app.use((req, res, next) => {
+  if (req.originalUrl === "/webhook") {
+    next(); // Skip body-parser for this route
+  } else {
+    bodyParser.json()(req, res, next); // Use body-parser for other routes
+  }
+});
 
 // Endpoint to fetch checkout session details
 app.get("/checkout-session", async (req, res) => {
