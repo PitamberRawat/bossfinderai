@@ -15,13 +15,7 @@ admin.initializeApp({
   databaseURL: "https://bossfinderai.firebaseio.com",
 });
 
-app.use((req, res, next) => {
-  if (req.originalUrl === "/webhook") {
-    next(); // Skip CORS for the webhook
-  } else {
-    cors()(req, res, next); // Use CORS for all other routes
-  }
-});
+app.use(cors());
 app.use((req, res, next) => {
   if (req.originalUrl === "/webhook") {
     next(); // Skip body-parser for this route
