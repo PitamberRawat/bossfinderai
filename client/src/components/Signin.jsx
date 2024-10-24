@@ -22,6 +22,7 @@ import {
   Mail,
   Calendar,
   Target,
+  DollarSign,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -41,6 +42,8 @@ import { auth, db } from "./config/firebase";
 import { ToastContainer, toast } from "react-toastify"; // Import toast and container
 import "react-toastify/dist/ReactToastify.css";
 import { doc, getDoc } from "firebase/firestore";
+import bfalogo from "../assets/bfalogo.png";
+import "./Signin.css";
 
 export default function Signin() {
   const navigate = useNavigate();
@@ -50,7 +53,9 @@ export default function Signin() {
   const [bossLink, setBossLink] = useState("");
   const [showThankYou, setShowThankYou] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [activeSection, setActiveSection] = useState("dashboard");
+  const [activeSection, setActiveSection] = useState("pricing");
+  const [date, setDate] = useState("");
+
   const handleResetPassword = () => {
     toast({
       title: "Password Reset Requested",
@@ -96,7 +101,15 @@ export default function Signin() {
     // Cleanup the listener when the component unmounts
     return () => unsubscribe();
   }, [location.state, navigate]);
-  console.log(detailsOfUser);
+
+  useEffect(() => {
+    setDate(
+      new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toLocaleDateString(
+        "en-GB",
+        { day: "numeric", month: "long" }
+      )
+    );
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -129,78 +142,86 @@ export default function Signin() {
     switch (activeSection) {
       case "dashboard":
         return (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            <Card className="bg-gradient-to-br from-purple-900 to-indigo-800 text-white border border-purple-700 shadow-lg hover:shadow-purple-500/20 transition-shadow duration-300">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Credits Available
-                </CardTitle>
-                <CreditCard className="h-4 w-4 text-purple-300" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {detailsOfUser.credits}
-                </div>
-                {/* <p className="text-xs text-purple-300">Next refill in 3 days</p> */}
-                <Progress
-                  value={70}
-                  className="mt-2 bg-purple-950"
-                  indicatorClassName="bg-purple-400"
-                />
-              </CardContent>
-            </Card>
-            <Card className="bg-gradient-to-br from-blue-900 to-cyan-800 text-white border border-blue-700 shadow-lg hover:shadow-blue-500/20 transition-shadow duration-300">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  AI Emails Available
-                </CardTitle>
-                <Mail className="h-4 w-4 text-blue-300" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">500</div>
-                <p className="text-xs text-blue-300">Unlimited on Pro plan</p>
-                <Progress
-                  value={50}
-                  className="mt-2 bg-blue-950"
-                  indicatorClassName="bg-blue-400"
-                />
-              </CardContent>
-            </Card>
-            <Card className="bg-gradient-to-br from-green-900 to-emerald-800 text-white border border-green-700 shadow-lg hover:shadow-green-500/20 transition-shadow duration-300">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Plan Expiry
-                </CardTitle>
-                <Calendar className="h-4 w-4 text-green-300" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">23 Days</div>
-                <p className="text-xs text-green-300">Renews on 30 Oct 2023</p>
-                <Progress
-                  value={30}
-                  className="mt-2 bg-green-950"
-                  indicatorClassName="bg-green-400"
-                />
-              </CardContent>
-            </Card>
-            <Card className="bg-gradient-to-br from-orange-900 to-red-800 text-white border border-orange-700 shadow-lg hover:shadow-orange-500/20 transition-shadow duration-300">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Bosses Found Till Now
-                </CardTitle>
-                <Target className="h-4 w-4 text-orange-300" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">42</div>
-                <p className="text-xs text-orange-300">+3 this week</p>
-                <Progress
-                  value={84}
-                  className="mt-2 bg-orange-950"
-                  indicatorClassName="bg-orange-400"
-                />
-              </CardContent>
-            </Card>
-          </div>
+          <>
+            <h1 className="text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+              Welcome to Your BossFindr Dashboard
+            </h1>
+
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              <Card className="bg-gradient-to-br from-purple-900 to-indigo-800 text-white border border-purple-700 shadow-lg hover:shadow-purple-500/20 transition-shadow duration-300">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">
+                    Credits Available
+                  </CardTitle>
+                  <CreditCard className="h-4 w-4 text-purple-300" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">
+                    {detailsOfUser.credits}
+                  </div>
+                  {/* <p className="text-xs text-purple-300">Next refill in 3 days</p> */}
+                  <Progress
+                    value={70}
+                    className="mt-2 bg-purple-950"
+                    indicatorClassName="bg-purple-400"
+                  />
+                </CardContent>
+              </Card>
+              <Card className="bg-gradient-to-br from-blue-900 to-cyan-800 text-white border border-blue-700 shadow-lg hover:shadow-blue-500/20 transition-shadow duration-300">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">
+                    AI Emails Available
+                  </CardTitle>
+                  <Mail className="h-4 w-4 text-blue-300" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">500</div>
+                  <p className="text-xs text-blue-300">Unlimited on Pro plan</p>
+                  <Progress
+                    value={50}
+                    className="mt-2 bg-blue-950"
+                    indicatorClassName="bg-blue-400"
+                  />
+                </CardContent>
+              </Card>
+              <Card className="bg-gradient-to-br from-green-900 to-emerald-800 text-white border border-green-700 shadow-lg hover:shadow-green-500/20 transition-shadow duration-300">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">
+                    Plan Expiry
+                  </CardTitle>
+                  <Calendar className="h-4 w-4 text-green-300" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">23 Days</div>
+                  <p className="text-xs text-green-300">
+                    Renews on 30 Oct 2023
+                  </p>
+                  <Progress
+                    value={30}
+                    className="mt-2 bg-green-950"
+                    indicatorClassName="bg-green-400"
+                  />
+                </CardContent>
+              </Card>
+              <Card className="bg-gradient-to-br from-orange-900 to-red-800 text-white border border-orange-700 shadow-lg hover:shadow-orange-500/20 transition-shadow duration-300">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">
+                    Bosses Found Till Now
+                  </CardTitle>
+                  <Target className="h-4 w-4 text-orange-300" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">42</div>
+                  <p className="text-xs text-orange-300">+3 this week</p>
+                  <Progress
+                    value={84}
+                    className="mt-2 bg-orange-950"
+                    indicatorClassName="bg-orange-400"
+                  />
+                </CardContent>
+              </Card>
+            </div>
+          </>
         );
       case "profile":
         return (
@@ -280,7 +301,7 @@ export default function Signin() {
             </CardContent>
           </Card>
         );
-      default:
+      case "settings":
         return (
           <Card className="bg-gray-900 text-white border-gray-800">
             <CardHeader>
@@ -297,147 +318,25 @@ export default function Signin() {
             </CardContent>
           </Card>
         );
-    }
-  };
-
-  return (
-    <>
-      <ToastContainer />
-      <div
-        className="flex h-full w-full  text-white font-inter"
-        style={{ backgroundColor: "rgb(17,24,39", width: "100%" }}
-      >
-        {/* Navigation Sidebar */}
-        <nav className="w-64 bg-gray-900 p-4 border-r border-gray-800">
-          <div className="flex items-center justify-center mb-8">
-            <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-              BossFindr
-            </span>
-          </div>
-          <div className="space-y-2">
-            <Button
-              variant="ghost"
-              className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
-              onClick={() => setActiveSection("dashboard")}
-            >
-              <Home className="mr-2 h-4 w-4" />
-              Dashboard
-            </Button>
-            <Button
-              variant="ghost"
-              className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
-              onClick={() => setActiveSection("profile")}
-            >
-              <User className="mr-2 h-4 w-4" />
-              Profile
-            </Button>
-            <Button
-              variant="ghost"
-              className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
-              onClick={() => setActiveSection("findBoss")}
-            >
-              <Briefcase className="mr-2 h-4 w-4" />
-              Find Your Next Boss
-            </Button>
-            <Button
-              variant="ghost"
-              className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
-              onClick={() => setActiveSection("settings")}
-            >
-              <Settings className="mr-2 h-4 w-4" />
-              Settings
-            </Button>
-            <Button
-              variant="ghost"
-              className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
-              onClick={() => setActiveSection("help")}
-            >
-              <HelpCircle className="mr-2 h-4 w-4" />
-              Help & Support
-            </Button>
-          </div>
-        </nav>
-
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            backgroundColor: "rgb(17,24,39)",
-          }}
-        >
-          {/* Main Content Area */}
-          <div className="flex-1 flex flex-col">
-            {/* Top Bar */}
-            <header className="bg-gray-900 border-b border-gray-800 p-4 flex justify-between items-center">
-              <div className="flex items-center space-x-4">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-gray-400 hover:text-white"
-                >
-                  <Search className="h-5 w-5" />
-                </Button>
-                <Input
-                  placeholder="Search..."
-                  className="bg-gray-800 border-gray-700 text-white w-64 focus:border-purple-500 focus:ring-purple-500"
-                />
-              </div>
-              <div className="flex items-center space-x-4">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-gray-400 hover:text-white relative"
-                >
-                  <Bell className="h-5 w-5" />
-                  <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
-                </Button>
-                <button className="auth-btn" onClick={handleLogout}>
-                  Log out
-                </button>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      className="relative h-8 w-8 rounded-full"
-                    >
-                      <img
-                        className="rounded-full"
-                        src="/placeholder.svg?height=32&width=32"
-                        alt="User"
-                      />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56" align="end" forceMount>
-                    <DropdownMenuLabel className="font-normal">
-                      <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">
-                          John Doe
-                        </p>
-                        <p className="text-xs leading-none text-muted-foreground">
-                          john@example.com
-                        </p>
-                      </div>
-                    </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>Profile</DropdownMenuItem>
-                    <DropdownMenuItem>Billing</DropdownMenuItem>
-                    <DropdownMenuItem>Settings</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>Log out</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            </header>
-
-            {/* Content */}
-            <main className="flex-1 p-6 overflow-auto  from-gray-900 to-black">
-              <h1 className="text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-                Welcome to Your BossFindr Dashboard
-              </h1>
-              {renderContent()}
-            </main>
-          </div>
-
+      case "help":
+        return (
+          <Card className="bg-gray-900 text-white border-gray-800">
+            <CardHeader>
+              <CardTitle>Coming Soon</CardTitle>
+              <CardDescription className="text-gray-400">
+                This feature is under development
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p>
+                We're working hard to bring you new exciting features. Stay
+                tuned!
+              </p>
+            </CardContent>
+          </Card>
+        );
+      default:
+        return (
           <div
             style={{
               display: "flex",
@@ -446,31 +345,6 @@ export default function Signin() {
               alignItems: "center",
             }}
           >
-            {/* <div
-              style={{
-                height: "600px",
-                backgroundColor: "green",
-                width: "900px",
-              }}
-            >
-              {userData.map((d) => {
-                return (
-                  <div
-                    style={{
-                      height: "200px",
-                      width: "400px",
-                      backgroundColor: "red",
-                      color: "white",
-                    }}
-                  >
-                    <h1 style={{ color: "white" }}>{d.name}</h1>
-                    <h1 style={{ color: "white" }}>{d.email}</h1>
-                    <h1 style={{ color: "white" }}>{d.credits}</h1>
-                    <h1 style={{ color: "white" }}>{d.plan}</h1>
-                  </div>
-                );
-              })}
-            </div> */}
             {/* LEFT CARD */}
             <div className="flex-row-div">
               <div className="left-card pricing-card-div">
@@ -514,7 +388,7 @@ export default function Signin() {
                           color: "white",
                         }}
                       >
-                        Early bird pricing till 15th October!
+                        Early bird pricing till {date}!
                       </p>
                     </div>
                   </div>
@@ -542,7 +416,7 @@ export default function Signin() {
                 <a
                   href=""
                   className="btn-anchor"
-                  onClick={() => navigate("/checkoutpage")}
+                  onClick={() => navigate("/checkoutpage", { state: 0 })}
                 >
                   <p className="btn-secure-para">Get Started </p>
                   <span className="arrow-right">→</span>
@@ -610,7 +484,7 @@ export default function Signin() {
                           color: "black",
                         }}
                       >
-                        Early bird pricing till 15th October!
+                        Early bird pricing till {date}!
                       </p>
                     </div>
                   </div>
@@ -645,7 +519,7 @@ export default function Signin() {
                   </div>
                 </div>
                 <a
-                  onClick={() => navigate("/checkoutpage")}
+                  onClick={() => navigate("/checkoutpage", { state: 1 })}
                   href=""
                   className="btn-anchor"
                   style={{ backgroundColor: "white" }}
@@ -662,7 +536,10 @@ export default function Signin() {
 
             {/* RIGHT CARD  */}
 
-            <div className="left-card pricing-card-div right-card-divvv">
+            <div
+              style={{ marginTop: "20px" }}
+              className="left-card pricing-card-div right-card-divvv"
+            >
               <div className="top-section">
                 <div className="start-book-container">
                   <div className="para-start-div">
@@ -719,7 +596,7 @@ export default function Signin() {
                         color: "white",
                       }}
                     >
-                      Early bird pricing till 15th October!
+                      Early bird pricing till {date}!
                     </p>
                   </div>
                 </div>
@@ -747,7 +624,7 @@ export default function Signin() {
                 </div>
               </div>
               <a
-                onClick={() => navigate("/checkoutpage")}
+                onClick={() => navigate("/checkoutpage", { state: 2 })}
                 href=""
                 className="btn-anchor"
               >
@@ -756,7 +633,166 @@ export default function Signin() {
               </a>
             </div>
           </div>
-          <TelegramChat />
+        );
+    }
+  };
+
+  return (
+    <>
+      <ToastContainer />
+      <div
+        className="flex  text-white font-inter"
+        style={{
+          backgroundColor: "rgb(17,24,39)",
+          minHeight: "100vh",
+        }}
+      >
+        {/* Navigation Sidebar */}
+
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            flexDirection: "column",
+            backgroundColor: "rgb(17,24,39)",
+          }}
+        >
+          {/* Main Content Area */}
+          <div className="flex    flex-col">
+            {/* Top Bar */}
+            <header className="header-content-area bg-gray-900 border-b border-gray-800 flex justify-between items-center">
+              <div className="flex items-center justify-center mb-2">
+                <span className="logotext text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+                  BossFindr
+                </span>
+                <div style={{ display: "flex", height: "100px" }}>
+                  <img src={bfalogo} alt="" className="logoimgdashboard" />
+                </div>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-gray-400 hover:text-white"
+                >
+                  <Search className="h-5 w-5" />
+                </Button>
+                <Input
+                  placeholder="Search..."
+                  className="inputsearch bg-gray-800 border-gray-700 text-white  focus:border-purple-500 focus:ring-purple-500"
+                />
+              </div>
+              <div className="flex items-center space-x-4">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-gray-400 hover:text-white relative"
+                >
+                  <Bell className="h-5 w-5" />
+                  <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
+                </Button>
+                <button className="auth-btn" onClick={handleLogout}>
+                  Log out
+                </button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      className="relative h-8 w-8 rounded-full"
+                    >
+                      <img
+                        className="rounded-full"
+                        src="/placeholder.svg?height=32&width=32"
+                        alt="User"
+                      />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56" align="end" forceMount>
+                    <DropdownMenuLabel className="font-normal">
+                      <div className="flex flex-col space-y-1">
+                        <p className="text-sm font-medium leading-none">
+                          John Doe
+                        </p>
+                        <p className="text-xs leading-none text-muted-foreground">
+                          john@example.com
+                        </p>
+                      </div>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                    <DropdownMenuItem>Billing</DropdownMenuItem>
+                    <DropdownMenuItem>Settings</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Log out</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </header>
+
+            {/* Content */}
+            <main className="w-full main-content-area flex from-gray-900 to-black ">
+              <nav className="nav-content-area bg-gray-900 p-1 border-r border-gray-800">
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
+                  onClick={() => setActiveSection("dashboard")}
+                >
+                  <Home className="mr-2 h-4 w-4" />
+                  <span className="nav-span-text">Dashboard</span>
+                </Button>
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
+                  onClick={() => setActiveSection("profile")}
+                >
+                  <User className="mr-2 h-4 w-4" />
+                  <span className="nav-span-text">Profile</span>
+                </Button>
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
+                  onClick={() => setActiveSection("pricing")}
+                >
+                  <DollarSign className="mr-2 h-4 w-4" />
+                  <span className="nav-span-text">Pricing</span>
+                </Button>
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
+                  onClick={() => setActiveSection("findBoss")}
+                >
+                  <Briefcase className="mr-2 h-4 w-4" />
+                  <span className="nav-span-text">Find Your Next Boss</span>
+                </Button>
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
+                  onClick={() => setActiveSection("settings")}
+                >
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span className="nav-span-text">Settings</span>
+                </Button>
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
+                  onClick={() => setActiveSection("help")}
+                >
+                  <HelpCircle className="mr-2 h-4 w-4" />
+                  <span className="nav-span-text">Help & Support</span>
+                </Button>
+              </nav>
+              <div
+                style={{
+                  marginTop: "30px",
+                  width: "100%",
+                }}
+              >
+                {renderContent()}
+              </div>
+            </main>
+          </div>
+
+          {/* <TelegramChat /> */}
         </div>
       </div>
     </>

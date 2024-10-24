@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Pricing.css";
 import { useNavigate } from "react-router-dom";
 const Pricing = () => {
   const navigate = useNavigate();
+  const [date, setDate] = useState("");
+
+  useEffect(() => {
+    setDate(
+      new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toLocaleDateString(
+        "en-GB",
+        { day: "numeric", month: "long" }
+      )
+    );
+  }, []);
   return (
     <div className="pricing" id="pricing">
       <div className="pricing-container">
@@ -86,7 +96,7 @@ const Pricing = () => {
                           color: "white",
                         }}
                       >
-                        Early bird pricing till 15th October!
+                        Early bird pricing till {date}!
                       </p>
                     </div>
                   </div>
@@ -182,7 +192,7 @@ const Pricing = () => {
                           color: "black",
                         }}
                       >
-                        Early bird pricing till 15th October!
+                        Early bird pricing till {date}!
                       </p>
                     </div>
                   </div>
@@ -291,7 +301,7 @@ const Pricing = () => {
                         color: "white",
                       }}
                     >
-                      Early bird pricing till 15th October!
+                      Early bird pricing till {date}!
                     </p>
                   </div>
                 </div>

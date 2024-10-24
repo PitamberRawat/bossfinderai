@@ -116,14 +116,15 @@ const Footer = () => {
       </div>
       <div className="sticky-navbar">
         <div className="nav-container">
-          {/* <img
+          <img
             style={{
               height: "60px",
               width: "90px",
             }}
+            className="sticky-nav-img"
             src="https://framerusercontent.com/images/gAKACEGDrWnhhE9OEb1ppLbSqc.png"
             alt=""
-          /> */}
+          />
 
           <div className="links">
             <a href="#how" className="link">

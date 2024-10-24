@@ -92,7 +92,7 @@ app.post(
         const amountReceived = session.amount_total; // Total amount in cents
 
         // Update Firestore based on the amount
-        await updateCredits(userId, amountReceived);
+        await updateFields(userId, amountReceived);
         break;
       // Handle other event types as needed
       default:
@@ -104,25 +104,30 @@ app.post(
 );
 
 // Function to update credits in Firestore
-async function updateCredits(userId, amount) {
+async function updateFields(userId, amount) {
   let creditsToAdd = 0;
+  let plan = "";
 
   // Determine credits based on the amount received
   if (amount === 300) {
     // Example price ID for $3
     creditsToAdd = 5;
+    planToAdd = "Basic";
   } else if (amount === 1900) {
     // Example price ID for $19
     creditsToAdd = 50;
+    planToAdd = "Standard";
   } else if (amount === 4900) {
     // Example price ID for $49
     creditsToAdd = 50;
+    planToAdd = "Premium";
   }
 
   // Update the Firestore user's credits
   const userRef = admin.firestore().collection("users").doc(userId);
   await userRef.update({
     credits: admin.firestore.FieldValue.increment(creditsToAdd),
+    plan: admin.firestore.FieldValue.increment(planToAdd),
   });
 }
 

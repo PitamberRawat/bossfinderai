@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import basic from "../assets/basic.png";
 import standard from "../assets/standard.png";
 import premium from "../assets/premium.png";
 import "./checkoutpage.css";
 import { auth } from "./config/firebase";
+import { useLocation } from "react-router-dom";
 
 const stripePromise = loadStripe(
   "pk_test_51Q1A3MRw8r3Vx2XaZ5foTvPbqzA9mHzHXhpuCHUglltHjhIYMb5FxY0q1gJLwsJOV9PzBypVzw2MARd7UBl5Euih00TQGsoMiD"
@@ -36,8 +37,21 @@ const products = [
 
 const CheckoutPage = () => {
   // Get the Firebase auth instance
+  const location = useLocation();
   const user = auth.currentUser;
-  const [selectedProduct, setSelectedProduct] = useState(products[0]); // Default to the first product
+  const [idx, setIdx] = useState(0);
+  const [selectedProduct, setSelectedProduct] = useState(products[0]);
+
+  useEffect(() => {
+    // Get the value passed through navigate and set it as state
+    if (location.state !== undefined) {
+      setIdx(location.state);
+    }
+  }, [location.state]);
+  useEffect(() => {
+    // Update selectedProduct whenever idx changes
+    setSelectedProduct(products[idx]);
+  }, [idx, products]);
   if (!user) {
     console.error("No user is logged in");
     return;
@@ -78,7 +92,7 @@ const CheckoutPage = () => {
   return (
     <>
       <div className="container">
-        <h1 className="heading">Select a Product</h1>
+        <h1 className="heading">Select a Plan</h1>
         <div className="product-wrapper">
           <img
             src={selectedProduct.image}
@@ -102,7 +116,7 @@ const CheckoutPage = () => {
             </ul>
             <div className="selected-details">
               <h2 className="selected-product">
-                Selected Product: {selectedProduct.name}
+                Selected Plan: {selectedProduct.name}
               </h2>
               <button className="checkout-button" onClick={handleCheckout}>
                 Checkout
