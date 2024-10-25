@@ -143,7 +143,7 @@ export default function Signin() {
       case "dashboard":
         return (
           <>
-            <h1 className="text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+            <h1 className="pl-2 text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
               Welcome to Your BossFindr Dashboard
             </h1>
 
@@ -159,7 +159,9 @@ export default function Signin() {
                   <div className="text-2xl font-bold">
                     {detailsOfUser.credits}
                   </div>
-                  {/* <p className="text-xs text-purple-300">Next refill in 3 days</p> */}
+                  <p className="text-xs text-purple-300">
+                    Next refill in 0 days
+                  </p>
                   <Progress
                     value={70}
                     className="mt-2 bg-purple-950"
@@ -175,7 +177,7 @@ export default function Signin() {
                   <Mail className="h-4 w-4 text-blue-300" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">500</div>
+                  <div className="text-2xl font-bold">0</div>
                   <p className="text-xs text-blue-300">Unlimited on Pro plan</p>
                   <Progress
                     value={50}
@@ -192,10 +194,8 @@ export default function Signin() {
                   <Calendar className="h-4 w-4 text-green-300" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">23 Days</div>
-                  <p className="text-xs text-green-300">
-                    Renews on 30 Oct 2023
-                  </p>
+                  <div className="text-2xl font-bold">0 Days</div>
+                  <p className="text-xs text-green-300">Renews on ---</p>
                   <Progress
                     value={30}
                     className="mt-2 bg-green-950"
@@ -211,8 +211,8 @@ export default function Signin() {
                   <Target className="h-4 w-4 text-orange-300" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">42</div>
-                  <p className="text-xs text-orange-300">+3 this week</p>
+                  <div className="text-2xl font-bold">0</div>
+                  <p className="text-xs text-orange-300">+0 this week</p>
                   <Progress
                     value={84}
                     className="mt-2 bg-orange-950"
@@ -225,220 +225,410 @@ export default function Signin() {
         );
       case "profile":
         return (
-          <Card className="bg-gray-900 text-white border-gray-800">
-            <CardHeader>
-              <CardTitle>Your Profile</CardTitle>
-              <CardDescription className="text-gray-400">
-                Manage your account details
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="name" className="text-white">
-                  Name
-                </Label>
-                <Input
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="bg-gray-800 text-white border-gray-700 focus:border-purple-500 focus:ring-purple-500"
-                />
-              </div>
-              <Button
-                onClick={handleResetPassword}
-                variant="outline"
-                className="text-white border-white hover:bg-gray-800"
-              >
-                Reset Password
-              </Button>
-            </CardContent>
-          </Card>
+          <>
+            <h1 className="pl-4 text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+              Profile
+            </h1>
+            <Card className="bg-gray-900 text-white border-gray-800">
+              <CardHeader>
+                <CardTitle>Your Profile</CardTitle>
+                <CardDescription className="text-gray-400">
+                  Manage your account details
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="text-white">
+                    Name
+                  </Label>
+                  <Input
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="bg-gray-800 text-white border-gray-700 focus:border-purple-500 focus:ring-purple-500"
+                  />
+                </div>
+                <Button
+                  onClick={handleResetPassword}
+                  variant="outline"
+                  className="text-white border-white hover:bg-gray-800"
+                >
+                  Reset Password
+                </Button>
+              </CardContent>
+            </Card>
+          </>
         );
       case "findBoss":
         return (
-          <Card className="bg-gray-900 text-white border-gray-800">
-            <CardHeader>
-              <CardTitle>Find Your Next Boss</CardTitle>
-              <CardDescription className="text-gray-400">
-                Enter a link to get details about your potential boss
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {!showThankYou ? (
-                <form onSubmit={handleBossLinkSubmit} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="bossLink" className="text-white">
-                      Enter Link
-                    </Label>
-                    <Input
-                      id="bossLink"
-                      value={bossLink}
-                      onChange={(e) => setBossLink(e.target.value)}
-                      placeholder="https://example.com/job-posting"
-                      required
-                      className="bg-gray-800 text-white border-gray-700 focus:border-purple-500 focus:ring-purple-500"
-                    />
+          <>
+            <h1 className="pl-4 text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+              Find Your Next Boss
+            </h1>
+            <Card className="bg-gray-900 text-white border-gray-800">
+              <CardHeader>
+                <CardTitle>Find Your Next Boss</CardTitle>
+                <CardDescription className="text-gray-400">
+                  Enter a link to get details about your potential boss
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {!showThankYou ? (
+                  <form onSubmit={handleBossLinkSubmit} className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="bossLink" className="text-white">
+                        Enter Link
+                      </Label>
+                      <Input
+                        id="bossLink"
+                        value={bossLink}
+                        onChange={(e) => setBossLink(e.target.value)}
+                        placeholder="https://example.com/job-posting"
+                        required
+                        className="bg-gray-800 text-white border-gray-700 focus:border-purple-500 focus:ring-purple-500"
+                      />
+                    </div>
+                    <Button
+                      type="submit"
+                      className="bg-purple-600 hover:bg-purple-700 text-white"
+                    >
+                      Submit
+                    </Button>
+                  </form>
+                ) : (
+                  <div className="space-y-4">
+                    <p className="text-green-400">
+                      Thank you! You will receive the details of your boss
+                      shortly.
+                    </p>
+                    <Progress value={33} className="w-full" />
+                    <p className="text-sm text-gray-400">
+                      Processing your request... (33%)
+                    </p>
                   </div>
-                  <Button
-                    type="submit"
-                    className="bg-purple-600 hover:bg-purple-700 text-white"
-                  >
-                    Submit
-                  </Button>
-                </form>
-              ) : (
-                <div className="space-y-4">
-                  <p className="text-green-400">
-                    Thank you! You will receive the details of your boss
-                    shortly.
-                  </p>
-                  <Progress value={33} className="w-full" />
-                  <p className="text-sm text-gray-400">
-                    Processing your request... (33%)
-                  </p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                )}
+              </CardContent>
+            </Card>
+          </>
         );
       case "settings":
         return (
-          <Card className="bg-gray-900 text-white border-gray-800">
-            <CardHeader>
-              <CardTitle>Coming Soon</CardTitle>
-              <CardDescription className="text-gray-400">
-                This feature is under development
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p>
-                We're working hard to bring you new exciting features. Stay
-                tuned!
-              </p>
-            </CardContent>
-          </Card>
+          <>
+            <h1 className="pl-4 text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+              Settings
+            </h1>
+            <Card className="bg-gray-900 text-white border-gray-800">
+              <CardHeader>
+                <CardTitle>Coming Soon</CardTitle>
+                <CardDescription className="text-gray-400">
+                  This feature is under development
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p>
+                  We're working hard to bring you new exciting features. Stay
+                  tuned!
+                </p>
+              </CardContent>
+            </Card>
+          </>
         );
       case "help":
         return (
-          <Card className="bg-gray-900 text-white border-gray-800">
-            <CardHeader>
-              <CardTitle>Coming Soon</CardTitle>
-              <CardDescription className="text-gray-400">
-                This feature is under development
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p>
-                We're working hard to bring you new exciting features. Stay
-                tuned!
-              </p>
-            </CardContent>
-          </Card>
+          <>
+            <h1 className="pl-4 text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+              Help & Support
+            </h1>
+            <Card className="bg-gray-900 text-white border-gray-800">
+              <CardHeader>
+                <CardTitle>Coming Soon</CardTitle>
+                <CardDescription className="text-gray-400">
+                  This feature is under development
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p>
+                  We're working hard to bring you new exciting features. Stay
+                  tuned!
+                </p>
+              </CardContent>
+            </Card>
+          </>
         );
       default:
         return (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {/* LEFT CARD */}
-            <div className="flex-row-div">
-              <div className="left-card pricing-card-div">
-                <div className="top-section">
-                  <div className="start-book-container">
-                    <div className="para-start-div">
-                      <p className="para-start">Try us!</p>
-                    </div>
-                  </div>
+          <>
+            <h1 className="text-center -mt-7 text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+              Pricing
+            </h1>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: "-8px",
+              }}
+            >
+              {/* LEFT CARD */}
+              <div className="flex-row-div">
+                <div className="pricing-col">
+                  <div className="left-card pricing-card-div">
+                    <div className="top-section">
+                      <div className="start-book-container">
+                        <div className="para-start-div">
+                          <p className="para-start">Try us!</p>
+                        </div>
+                      </div>
 
-                  <div className="price-container">
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "flex-start",
-                        flexShrink: "0",
-                      }}
-                    >
-                      <span className="price">$3</span>
-                      <span
-                        className="price"
+                      <div className="price-container">
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "flex-start",
+                            flexShrink: "0",
+                          }}
+                        >
+                          <span className="price">$3</span>
+                          <span
+                            className="price"
+                            style={{
+                              marginLeft: "5px",
+                              marginTop: "10px",
+                              fontSize: "25px",
+                              textDecoration: "line-through",
+                            }}
+                          >
+                            $10
+                          </span>
+                        </div>
+                        <div
+                          className="para-start-div"
+                          style={{ backgroundColor: "black" }}
+                        >
+                          <p
+                            className="para-start"
+                            style={{
+                              fontSize: "14px",
+                              color: "white",
+                            }}
+                          >
+                            Early bird pricing till {date}!
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="feature-section">
+                      <div
                         style={{
-                          marginLeft: "5px",
-                          marginTop: "10px",
-                          fontSize: "25px",
-                          textDecoration: "line-through",
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "flex-start",
+                          flexShrink: "0",
                         }}
                       >
-                        $10
-                      </span>
-                    </div>
-                    <div
-                      className="para-start-div"
-                      style={{ backgroundColor: "black" }}
-                    >
-                      <p
-                        className="para-start"
-                        style={{
-                          fontSize: "14px",
-                          color: "white",
-                        }}
-                      >
-                        Early bird pricing till {date}!
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                        <p className="feature-text">Features:</p>
+                      </div>
 
-                <div className="feature-section">
+                      <div className="feature-points-div">
+                        <Pointdiv point="5 Credits" />
+                        <Pointdiv point="Get Top 2 Matches per search" />
+                        <Pointdiv point="Look For Upto 5 Jobs" />
+                        {/* <Pointdiv point="Delivery Time: 30 Mins" /> */}
+                      </div>
+                    </div>
+                    <a
+                      href=""
+                      className="btn-anchor"
+                      onClick={() => navigate("/checkoutpage", { state: 0 })}
+                    >
+                      <p className="btn-secure-para">Get Started </p>
+                      <span className="arrow-right">→</span>
+                    </a>
+                  </div>
+
+                  {/*  Middle card */}
+
                   <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "flex-start",
-                      flexShrink: "0",
-                    }}
+                    className="left-card pricing-card-div"
+                    style={{ backgroundColor: "black" }}
                   >
-                    <p className="feature-text">Features:</p>
-                  </div>
+                    <div className="top-section">
+                      <div className="start-book-container">
+                        <div className="para-start-div">
+                          <p className="para-start" style={{ color: "white" }}>
+                            Enough credits to get your dream job!
+                          </p>
+                        </div>
+                      </div>
 
-                  <div className="feature-points-div">
-                    <Pointdiv point="5 Credits" />
-                    <Pointdiv point="Get Top 2 Matches per search" />
-                    <Pointdiv point="Look For Upto 5 Jobs" />
-                    {/* <Pointdiv point="Delivery Time: 30 Mins" /> */}
+                      <div className="price-container">
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "flex-start",
+                            flexShrink: "0",
+                          }}
+                        >
+                          <p className="price" style={{ color: "white" }}>
+                            $19
+                            <span
+                              style={{
+                                fontSize: "16px",
+                                fontWeight: "normal",
+                                letterSpacing: "normal",
+                              }}
+                            >
+                              <span
+                                className="price"
+                                style={{
+                                  marginLeft: "5px",
+                                  marginTop: "10px",
+                                  fontSize: "25px",
+                                  marginRight: "10px",
+                                  color: "white",
+                                  textDecoration: "line-through",
+                                }}
+                              >
+                                $49{" "}
+                              </span>
+                              per month
+                            </span>
+                          </p>
+                        </div>
+                        <div
+                          className="para-start-div"
+                          style={{ backgroundColor: "white" }}
+                        >
+                          <p
+                            className="para-start"
+                            style={{
+                              fontSize: "14px",
+                              color: "black",
+                            }}
+                          >
+                            Early bird pricing till {date}!
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="feature-section">
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "flex-start",
+                          flexShrink: "0",
+                        }}
+                      >
+                        <p style={{ color: "white" }} className="feature-text">
+                          Features:
+                        </p>
+                      </div>
+
+                      <div className="feature-points-div">
+                        <Pointdiv flag={true} point="50 Credits" />
+                        <Pointdiv
+                          flag={true}
+                          point="Get Top 5 Matches per search"
+                        />
+                        <Pointdiv flag={true} point="Look For Upto 50 Jobs" />
+                        {/* <Pointdiv flag={true} point="Delivery Time: 20 Mins" /> */}
+                        <Pointdiv
+                          flag={true}
+                          point="Upto 10 AI Email Copy: Coming Soon"
+                        />
+                      </div>
+                    </div>
+                    <a
+                      onClick={() => navigate("/checkoutpage", { state: 1 })}
+                      href=""
+                      className="btn-anchor"
+                      style={{ backgroundColor: "white" }}
+                    >
+                      <p className="btn-secure-para" style={{ color: "black" }}>
+                        Get Started{" "}
+                      </p>
+                      <span className="arrow-right" style={{ color: "black" }}>
+                        →
+                      </span>
+                    </a>
                   </div>
                 </div>
-                <a
-                  href=""
-                  className="btn-anchor"
-                  onClick={() => navigate("/checkoutpage", { state: 0 })}
+
+                {/* RIGHT CARD  */}
+
+                <div
+                  style={{ marginTop: "20px" }}
+                  className="left-card pricing-card-div right-card-divvv"
                 >
-                  <p className="btn-secure-para">Get Started </p>
-                  <span className="arrow-right">→</span>
-                </a>
-              </div>
+                  <div className="top-section">
+                    <div className="start-book-container">
+                      <div className="para-start-div">
+                        <p className="para-start">
+                          Never worry about unread resumes again. Reach hiring
+                          managers forever!
+                        </p>
+                      </div>
+                    </div>
 
-              {/*  Middle card */}
-
-              <div
-                className="left-card pricing-card-div"
-                style={{ backgroundColor: "black" }}
-              >
-                <div className="top-section">
-                  <div className="start-book-container">
-                    <div className="para-start-div">
-                      <p className="para-start" style={{ color: "white" }}>
-                        Enough credits to get your dream job!
-                      </p>
+                    <div className="price-container">
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "flex-start",
+                          flexShrink: "0",
+                        }}
+                      >
+                        <p className="price">
+                          $49
+                          <span
+                            className="price"
+                            style={{
+                              marginLeft: "5px",
+                              marginTop: "10px",
+                              fontSize: "25px",
+                              // color: "white",
+                              textDecoration: "line-through",
+                            }}
+                          >
+                            $299{" "}
+                          </span>
+                          <span
+                            style={{
+                              fontSize: "16px",
+                              fontWeight: "normal",
+                              letterSpacing: "normal",
+                              marginLeft: "10px",
+                            }}
+                          >
+                            lifetime access
+                          </span>
+                        </p>
+                      </div>
+                      <div
+                        className="para-start-div"
+                        style={{ backgroundColor: "black" }}
+                      >
+                        <p
+                          className="para-start"
+                          style={{
+                            fontSize: "14px",
+                            color: "white",
+                          }}
+                        >
+                          Early bird pricing till {date}!
+                        </p>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="price-container">
+                  <div className="feature-section">
                     <div
                       style={{
                         display: "flex",
@@ -447,192 +637,30 @@ export default function Signin() {
                         flexShrink: "0",
                       }}
                     >
-                      <p className="price" style={{ color: "white" }}>
-                        $19
-                        <span
-                          style={{
-                            fontSize: "16px",
-                            fontWeight: "normal",
-                            letterSpacing: "normal",
-                          }}
-                        >
-                          <span
-                            className="price"
-                            style={{
-                              marginLeft: "5px",
-                              marginTop: "10px",
-                              fontSize: "25px",
-                              marginRight: "10px",
-                              color: "white",
-                              textDecoration: "line-through",
-                            }}
-                          >
-                            $49{" "}
-                          </span>
-                          per month
-                        </span>
-                      </p>
+                      <p className="feature-text">Features:</p>
                     </div>
-                    <div
-                      className="para-start-div"
-                      style={{ backgroundColor: "white" }}
-                    >
-                      <p
-                        className="para-start"
-                        style={{
-                          fontSize: "14px",
-                          color: "black",
-                        }}
-                      >
-                        Early bird pricing till {date}!
-                      </p>
+
+                    <div className="feature-points-div">
+                      <Pointdiv point="50 Credits Every Day" />
+                      <Pointdiv point="Get Top 7 Matches" />
+                      <Pointdiv point="Look For Unlimited Jobs" />
+                      {/* <Pointdiv point="Delivery Time: 15 Mins" /> */}
+                      <Pointdiv point="LifeTime Support & Updates" />
+                      <Pointdiv point="Unlimited AI Email Copy: Coming Soon" />
                     </div>
                   </div>
-                </div>
-
-                <div className="feature-section">
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "flex-start",
-                      flexShrink: "0",
-                    }}
+                  <a
+                    onClick={() => navigate("/checkoutpage", { state: 2 })}
+                    href=""
+                    className="btn-anchor"
                   >
-                    <p style={{ color: "white" }} className="feature-text">
-                      Features:
-                    </p>
-                  </div>
-
-                  <div className="feature-points-div">
-                    <Pointdiv flag={true} point="50 Credits" />
-                    <Pointdiv
-                      flag={true}
-                      point="Get Top 5 Matches per search"
-                    />
-                    <Pointdiv flag={true} point="Look For Upto 50 Jobs" />
-                    {/* <Pointdiv flag={true} point="Delivery Time: 20 Mins" /> */}
-                    <Pointdiv
-                      flag={true}
-                      point="Upto 10 AI Email Copy: Coming Soon"
-                    />
-                  </div>
+                    <p className="btn-secure-para">Get Started </p>
+                    <span className="arrow-right">→</span>
+                  </a>
                 </div>
-                <a
-                  onClick={() => navigate("/checkoutpage", { state: 1 })}
-                  href=""
-                  className="btn-anchor"
-                  style={{ backgroundColor: "white" }}
-                >
-                  <p className="btn-secure-para" style={{ color: "black" }}>
-                    Get Started{" "}
-                  </p>
-                  <span className="arrow-right" style={{ color: "black" }}>
-                    →
-                  </span>
-                </a>
               </div>
             </div>
-
-            {/* RIGHT CARD  */}
-
-            <div
-              style={{ marginTop: "20px" }}
-              className="left-card pricing-card-div right-card-divvv"
-            >
-              <div className="top-section">
-                <div className="start-book-container">
-                  <div className="para-start-div">
-                    <p className="para-start">
-                      Never worry about unread resumes again. Reach hiring
-                      managers forever!
-                    </p>
-                  </div>
-                </div>
-
-                <div className="price-container">
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "flex-start",
-                      flexShrink: "0",
-                    }}
-                  >
-                    <p className="price">
-                      $49
-                      <span
-                        className="price"
-                        style={{
-                          marginLeft: "5px",
-                          marginTop: "10px",
-                          fontSize: "25px",
-                          // color: "white",
-                          textDecoration: "line-through",
-                        }}
-                      >
-                        $299{" "}
-                      </span>
-                      <span
-                        style={{
-                          fontSize: "16px",
-                          fontWeight: "normal",
-                          letterSpacing: "normal",
-                          marginLeft: "10px",
-                        }}
-                      >
-                        lifetime access
-                      </span>
-                    </p>
-                  </div>
-                  <div
-                    className="para-start-div"
-                    style={{ backgroundColor: "black" }}
-                  >
-                    <p
-                      className="para-start"
-                      style={{
-                        fontSize: "14px",
-                        color: "white",
-                      }}
-                    >
-                      Early bird pricing till {date}!
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="feature-section">
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "flex-start",
-                    flexShrink: "0",
-                  }}
-                >
-                  <p className="feature-text">Features:</p>
-                </div>
-
-                <div className="feature-points-div">
-                  <Pointdiv point="50 Credits Every Day" />
-                  <Pointdiv point="Get Top 7 Matches" />
-                  <Pointdiv point="Look For Unlimited Jobs" />
-                  {/* <Pointdiv point="Delivery Time: 15 Mins" /> */}
-                  <Pointdiv point="LifeTime Support & Updates" />
-                  <Pointdiv point="Unlimited AI Email Copy: Coming Soon" />
-                </div>
-              </div>
-              <a
-                onClick={() => navigate("/checkoutpage", { state: 2 })}
-                href=""
-                className="btn-anchor"
-              >
-                <p className="btn-secure-para">Get Started </p>
-                <span className="arrow-right">→</span>
-              </a>
-            </div>
-          </div>
+          </>
         );
     }
   };
@@ -669,7 +697,7 @@ export default function Signin() {
                   <img src={bfalogo} alt="" className="logoimgdashboard" />
                 </div>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="inputsearch flex items-center space-x-2">
                 <Button
                   variant="ghost"
                   size="icon"
@@ -679,7 +707,7 @@ export default function Signin() {
                 </Button>
                 <Input
                   placeholder="Search..."
-                  className="inputsearch bg-gray-800 border-gray-700 text-white  focus:border-purple-500 focus:ring-purple-500"
+                  className=" bg-gray-800 border-gray-700 text-white  focus:border-purple-500 focus:ring-purple-500"
                 />
               </div>
               <div className="flex items-center space-x-4">

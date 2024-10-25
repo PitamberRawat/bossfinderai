@@ -13,7 +13,16 @@
 .main-content-area {
   padding: 1.5rem;
 }
+.pricing-col {
+  display: flex;
+  gap: 20px;
+}
 
+@media (max-width: 1220px) {
+  .flex-row-div {
+    flex-direction: column;
+  }
+}
 @media (max-width: 885px) {
   .main-content-area {
     flex-direction: column;
@@ -39,6 +48,11 @@
     font-size: 10px;
   }
 }
+@media (max-width: 726px) {
+  .pricing-col {
+    flex-direction: column;
+  }
+}
 @media (max-width: 672px) {
   .nav-span-text {
     display: none;
@@ -61,7 +75,7 @@
 
 @media (max-width: 480px) {
   .inputsearch {
-    width: 100px;
+    width: 120px;
   }
   .header-content-area {
     padding: 0;
