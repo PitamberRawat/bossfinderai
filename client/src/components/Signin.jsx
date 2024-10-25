@@ -293,6 +293,7 @@ export default function Signin() {
                       className="bg-purple-600 hover:bg-purple-700 text-white"
                     >
                       Submit
+                      {/* Thank You! We're working on finding your new boss and will share the top matches on your email soon */}
                     </Button>
                   </form>
                 ) : (

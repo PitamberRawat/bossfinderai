@@ -248,7 +248,7 @@ const CheckoutPage = () => {
     const stripe = await stripePromise;
 
     const response = await fetch(
-      "https://bossfinderai.onrender.com/create-checkout-session",
+      "https://bossfinderai1.onrender.com/create-checkout-session",
       {
         method: "POST",
         headers: {
