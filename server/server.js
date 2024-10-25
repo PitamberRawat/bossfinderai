@@ -15,7 +15,7 @@ admin.initializeApp({
   databaseURL: "https://bossfinderai.firebaseio.com",
 });
 
-app.use(cors());
+app.use(cors({ origin: "https://bossfinderai.netlify.app" }));
 app.use((req, res, next) => {
   if (req.originalUrl === "/webhook") {
     next(); // Skip body-parser for this route
