@@ -73,7 +73,7 @@ const FAQ = () => {
             }}
           >
             {faqs.map((faq, index) => (
-              <div className="left-faq">
+              <div key={faq.question} className="left-faq">
                 <Quescontainer
                   key={index}
                   isEmail={faq.isEmail}

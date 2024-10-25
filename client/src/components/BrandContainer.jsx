@@ -7,10 +7,7 @@ const BrandContainer = ({ width, imgUrl, ar }) => {
     <>
       <li>
         <div className="li-container">
-          <div
-            style={{ width: width, aspectRatio: ar / "1" }}
-            className="brand-container"
-          >
+          <div style={{ width: width }} className="brand-container">
             <Brand imgUrl={imgUrl} />
           </div>
         </div>

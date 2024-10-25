@@ -1,6 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Pricing.css";
+import { useNavigate } from "react-router-dom";
 const Pricing = () => {
+  const navigate = useNavigate();
+  const [date, setDate] = useState("");
+
+  useEffect(() => {
+    setDate(
+      new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toLocaleDateString(
+        "en-GB",
+        { day: "numeric", month: "long" }
+      )
+    );
+  }, []);
   return (
     <div className="pricing" id="pricing">
       <div className="pricing-container">
@@ -70,7 +82,7 @@ const Pricing = () => {
                           textDecoration: "line-through",
                         }}
                       >
-                        $5
+                        $10
                       </span>
                     </div>
                     <div
@@ -84,7 +96,7 @@ const Pricing = () => {
                           color: "white",
                         }}
                       >
-                        Early bird pricing till 15th October!
+                        Early bird pricing till {date}!
                       </p>
                     </div>
                   </div>
@@ -109,7 +121,11 @@ const Pricing = () => {
                     {/* <Pointdiv point="Delivery Time: 30 Mins" /> */}
                   </div>
                 </div>
-                <a href="" className="btn-anchor">
+                <a
+                  onClick={() => navigate("/checkoutpage")}
+                  href=""
+                  className="btn-anchor"
+                >
                   <p className="btn-secure-para">Get Started </p>
                   <span className="arrow-right">→</span>
                 </a>
@@ -176,7 +192,7 @@ const Pricing = () => {
                           color: "black",
                         }}
                       >
-                        Early bird pricing till 15th October!
+                        Early bird pricing till {date}!
                       </p>
                     </div>
                   </div>
@@ -211,6 +227,7 @@ const Pricing = () => {
                   </div>
                 </div>
                 <a
+                  onClick={() => navigate("/checkoutpage")}
                   href=""
                   className="btn-anchor"
                   style={{ backgroundColor: "white" }}
@@ -284,7 +301,7 @@ const Pricing = () => {
                         color: "white",
                       }}
                     >
-                      Early bird pricing till 15th October!
+                      Early bird pricing till {date}!
                     </p>
                   </div>
                 </div>
@@ -311,7 +328,11 @@ const Pricing = () => {
                   <Pointdiv point="Unlimited AI Email Copy: Coming Soon" />
                 </div>
               </div>
-              <a href="" className="btn-anchor">
+              <a
+                onClick={() => navigate("/checkoutpage")}
+                href=""
+                className="btn-anchor"
+              >
                 <p className="btn-secure-para">Get Started </p>
                 <span className="arrow-right">→</span>
               </a>

@@ -1,9 +1,10 @@
 import React from "react";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import "./cancel.css";
 
 const Cancel = () => {
   return (
-    <div style={styles.container}>
+    <div className="cancel-container" style={styles.container}>
       <div style={styles.card}>
         <FaTimesCircle style={styles.icon} />
         <h1 style={styles.title}>Payment Canceled</h1>
@@ -34,7 +35,7 @@ const Cancel = () => {
         </p>
         <p style={styles.paragraph}>
           You can return to our{" "}
-          <a href="/" style={styles.link}>
+          <a onClick={() => navigate("/signin")} style={styles.link}>
             homepage
           </a>{" "}
           to continue browsing.
@@ -48,7 +49,7 @@ const Cancel = () => {
 const styles = {
   container: {
     backgroundColor: "#ff4d4d", // Red background
-    height: "100%",
+    // height: "100vh",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

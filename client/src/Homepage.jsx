@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { register, login, logout } from "./components/config/auth";
 import "./App.css";
 import Avatar from "./components/Avatar";
@@ -60,6 +60,8 @@ import cross from "../src/assets/cross.svg";
 import Card from "./components/Card";
 import AuthPage from "./components/AuthPage";
 import Signin from "./components/Signin";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./components/config/firebase";
 
 const review = [
   {
@@ -119,45 +121,21 @@ const review = [
 ];
 
 const Homepage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        console.log("User is logged in:", currentUser);
+        navigate("/signin");
+      } else {
+        console.log("User is not logged in");
+        navigate("/");
+      }
+    });
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    try {
-      await register(email, password);
-      setIsLoggedIn(true);
-      alert("Registration successful!");
-    } catch (error) {
-      console.error("Registration error:", error);
-      alert(error.message);
-    }
-  };
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      await login(email, password);
-      setIsLoggedIn(true);
-      alert("Login successful!");
-    } catch (error) {
-      console.error("Login error:", error);
-      alert(error.message);
-    }
-  };
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      setIsLoggedIn(false);
-      alert("Logged out successfully!");
-    } catch (error) {
-      console.error("Logout error:", error);
-      alert(error.message);
-    }
-  };
-
+    // Clean up the subscription
+    return () => unsubscribe();
+  }, [navigate]);
   const svg = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -166,9 +144,9 @@ const Homepage = () => {
       viewBox="0 0 24 24"
       fill="none"
       stroke="rgb(102, 102, 255)"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       style="width: 100%; height: 100%;"
     >
       <circle cx="12" cy="12" r="10"></circle>
@@ -176,7 +154,7 @@ const Homepage = () => {
       <line x1="9" y1="9" x2="15" y2="15"></line>
     </svg>
   );
-  const navigate = useNavigate();
+
   return (
     <>
       <div className="containerrr">
@@ -200,28 +178,21 @@ const Homepage = () => {
               alignItems: "center",
             }}
           >
-            <div className="blank"></div>
+            <div></div>
             <img
+              onClick={() => navigate("/")}
               src={logo}
               alt=""
-              width="200px"
-              style={{
-                marginBottom: "-120px",
-                marginLeft: "120px",
-                marginTop: "-80px",
-              }}
+              className="bfa-home-logo"
             />
             <div style={{ display: "flex", gap: "4px" }}>
               <button
                 className="auth-btn"
-                onClick={() => navigate("/auth", { state: { isLogin: false } })}
+                onClick={() => navigate("/register")}
               >
                 Sign up
               </button>
-              <button
-                className="auth-btn"
-                onClick={() => navigate("/auth", { state: { isLogin: true } })}
-              >
+              <button className="auth-btn" onClick={() => navigate("/login")}>
                 Log in
               </button>
             </div>
@@ -306,7 +277,12 @@ const Homepage = () => {
                 </div>
 
                 <div className="button-section">
-                  <a className="claim-button-top">
+                  <a
+                    onClick={() => {
+                      navigate("/auth");
+                    }}
+                    className="claim-button-top"
+                  >
                     {/* <div className="btnimgcon">
                       <img
                         height="100%"
@@ -503,10 +479,10 @@ const Homepage = () => {
                     height="24"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="rgb(102, 102, 255)"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     style={{
                       width: "100px",
                       height: "100px",
@@ -528,10 +504,10 @@ const Homepage = () => {
                     height="24"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="rgb(102, 102, 255)"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     style={{
                       width: "100px",
                       height: "100px",
@@ -554,10 +530,10 @@ const Homepage = () => {
                     height="24"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="rgb(102, 102, 255)"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     style={{
                       width: "100px",
                       height: "100px",

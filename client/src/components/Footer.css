@@ -111,7 +111,9 @@
   letter-spacing: -0.4px;
   line-height: 150%;
 }
-
+.sticky-nav-img {
+  display: none;
+}
 .socials {
   align-items: center;
   display: flex;
@@ -354,9 +356,13 @@
   .link {
     display: none;
   }
+  .sticky-nav-img {
+    display: block;
+  }
   .nav-container {
     width: 100%;
-    justify-content: center;
+    justify-content: space-around;
+    /* gap: 10px; */
   }
   .contact-section {
     width: 280px;
@@ -364,5 +370,18 @@
   }
   .book-text {
     font-size: 14px;
+  }
+}
+@media (max-width: 460px) {
+  .nav-container {
+    width: 100%;
+    justify-content: space-around;
+    gap: 10px;
+  }
+  .contact-section {
+    width: 210px;
+  }
+  .book-text {
+    font-size: 12px;
   }
 }

@@ -380,7 +380,7 @@
   justify-content: center;
 }
 
-@media (min-width: 810px) and (max-width: 1199px) {
+@media (min-width: 727px) and (max-width: 1199px) {
   .pricing {
     padding: 64px 32px;
   }
@@ -395,7 +395,7 @@
   }
 }
 
-@media (max-width: 809px) {
+@media (max-width: 726px) {
   .pricing {
     padding: 72px 16px;
   }

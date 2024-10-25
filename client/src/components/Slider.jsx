@@ -42,7 +42,6 @@ const Slider = () => {
             : "350px"
         }`,
 
-        height: "550px",
         // margin: "100px",
       }}
     >
