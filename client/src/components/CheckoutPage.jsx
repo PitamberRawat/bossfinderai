@@ -235,7 +235,7 @@ const CheckoutPage = () => {
   }, [location.state]);
 
   useEffect(() => {
-    setSelectedProduct(products[idx]);
+    setSelectedProduct(products[idx] || products[0]);
   }, [idx, products]);
 
   if (!user) {
@@ -286,11 +286,13 @@ const CheckoutPage = () => {
       <div className="container">
         <h1 className="heading">Select Your Plan</h1>
         <div className="product-wrapper">
-          <img
-            src={selectedProduct.image}
-            alt={selectedProduct.name}
-            className="product-image"
-          />
+          {selectedProduct && (
+            <img
+              src={selectedProduct.image}
+              alt={selectedProduct.name}
+              className="product-image"
+            />
+          )}
           <div className="product-details">
             <ul className="product-list">
               {products.map((product) => (

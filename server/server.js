@@ -94,6 +94,15 @@ app.post(
         // Update Firestore based on the amount
         await updateFields(userId, amountReceived);
         break;
+      case "charge.succeeded":
+        console.log("Charge succeeded event received:", event);
+        break;
+      case "payment_intent.created":
+        console.log("Payment intent created event received:", event);
+        break;
+      case "payment_intent.succeeded":
+        console.log("Payment intent succeeded event received:", event);
+        break;
       // Handle other event types as needed
       default:
         console.log(`Unhandled event type ${event.type}`);
@@ -124,11 +133,14 @@ async function updateFields(userId, amount) {
   }
 
   // Update the Firestore user's credits
-  const userRef = admin.firestore().collection("users").doc(userId);
-  await userRef.update({
-    credits: admin.firestore.FieldValue.increment(creditsToAdd),
-    plan: admin.firestore.FieldValue.increment(planToAdd),
-  });
+  if (creditsToAdd !== 0) {
+    const userRef = admin.firestore().collection("users").doc(userId);
+    await userRef.update({
+      credits: admin.firestore.FieldValue.increment(creditsToAdd),
+    });
+  } else {
+    console.log(`No credits to add for user ${userId}`);
+  }
 }
 
 const PORT = process.env.PORT;
