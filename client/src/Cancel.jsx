@@ -1,8 +1,10 @@
 import React from "react";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import "./cancel.css";
+import { useNavigate } from "react-router-dom";
 
 const Cancel = () => {
+  const navigate = useNavigate();
   return (
     <div className="cancel-container" style={styles.container}>
       <div style={styles.card}>

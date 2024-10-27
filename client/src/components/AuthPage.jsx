@@ -15,6 +15,7 @@ import {
   onAuthStateChanged,
   sendPasswordResetEmail,
   signOut,
+  sendEmailVerification,
 } from "firebase/auth";
 import {
   Dialog,
@@ -29,6 +30,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ToastContainer, toast } from "react-toastify"; // Import toast and container
 import "react-toastify/dist/ReactToastify.css";
+import Login from "./Login";
+import Register from "./Register";
 
 export default function AuthPage({ isLoginn }) {
   const location = useLocation();
@@ -43,31 +46,6 @@ export default function AuthPage({ isLoginn }) {
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
   const [forgotPasswordSubmitted, setForgotPasswordSubmitted] = useState(false);
-
-  const handleLogin = async () => {
-    setError("");
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      toast.success("Login Successfull");
-      const user = userCredential.user;
-
-      // Fetch user details from Firestore
-      const userData = await fetchUserDetails(user.uid);
-
-      navigate("/signin", { state: { user: userData } });
-
-      setEmail(""); // Clear input after successful login
-      setPassword("");
-      // Handle post-login actions here, e.g., redirect to dashboard
-    } catch (err) {
-      setError(err.message);
-      toast.error("Login error:", err);
-    }
-  };
 
   // Function to handle registration
   const handleRegister = async () => {
@@ -91,6 +69,10 @@ export default function AuthPage({ isLoginn }) {
       );
       const user = userCredential.user;
 
+      // Send email verification
+      await sendEmailVerification(user);
+      toast.info("Verification email sent. Please check your inbox.");
+
       // Add the newly registered user to Firestore
       await setDoc(doc(db, "users", user.uid), {
         name: name,
@@ -98,11 +80,13 @@ export default function AuthPage({ isLoginn }) {
         credits: 0, // Default credits value
         plan: "free", // Default plan value
       });
+      await signOut(auth);
       toast.success("Signup Successsfull ");
-      const userData = await fetchUserDetails(user.uid); // Await the user data
+      // const userData = await fetchUserDetails(user.uid);
+      // Await the user data
 
       // Navigate to UserDetails component and pass user data
-      navigate("/signin", { state: { user: userData } });
+      navigate("/login");
       setEmail(""); // Clear input after successful login
       setPassword("");
       setConfirmPassword("");
@@ -111,6 +95,37 @@ export default function AuthPage({ isLoginn }) {
     } catch (err) {
       setError(err.message);
       toast.error("Registration error:", err);
+    }
+  };
+
+  const handleLogin = async () => {
+    setError("");
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      if (user.emailVerified) {
+        toast.success("Login Successful");
+        const userData = await fetchUserDetails(user.uid);
+        navigate("/signin", { state: { user: userData } });
+
+        setEmail(""); // Clear input after successful login
+        setPassword("");
+      } else {
+        // If email is not verified
+        setError("Please verify your email before logging in.");
+        toast.error("Please verify your email before logging in.");
+        await sendEmailVerification(user); // Resend verification email if needed
+        await signOut(auth); // Log out the user if email is not verified
+      }
+
+      // Handle post-login actions here, e.g., redirect to dashboard
+    } catch (err) {
+      setError(err.message);
+      toast.error("Login error:", err);
     }
   };
 
@@ -145,182 +160,27 @@ export default function AuthPage({ isLoginn }) {
     return () => unsubscribe();
   }, []);
 
-  // const handleForgotPassword = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     await sendPasswordResetEmail(auth, forgotPasswordEmail);
-  //     setForgotPasswordSubmitted(true);
-  //     alert("Password reset link has been sent to your email.");
-  //   } catch (error) {
-  //     setError("Error sending password reset link. Please try again.");
-  //   }
-  // };
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    try {
+      await sendPasswordResetEmail(auth, forgotPasswordEmail);
+      setForgotPasswordSubmitted(true);
+      alert("Password reset link has been sent to your email.");
+    } catch (error) {
+      setError("Error sending password reset link. Please try again.");
+    }
+  };
 
-  // const resetForgotPassword = () => {
-  //   setForgotPasswordEmail("");
-  //   setForgotPasswordSubmitted(false);
-  // };
+  const resetForgotPassword = () => {
+    setForgotPasswordEmail("");
+    setForgotPasswordSubmitted(false);
+  };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-white p-4">
-      <ToastContainer />
-      <div className="w-full max-w-md space-y-8">
-        <div className="text-center">
-          <h2 className="mt-6 text-3xl font-bold">
-            {isLogin ? "Welcome Back" : "Create an Account"}
-          </h2>
-          <p className="mt-2 text-sm text-gray-400">
-            {isLogin
-              ? "Sign in to access your account"
-              : "Sign up to get started"}
-          </p>
-        </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          {!isLogin && (
-            <div>
-              <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                name="name"
-                type="text"
-                required
-                className="mt-1 bg-gray-900 border-gray-700 text-white"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
-          )}
-          <div>
-            <Label htmlFor="email">Email address</Label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              required
-              className="mt-1 bg-gray-900 border-gray-700 text-white"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div>
-            <Label htmlFor="password">Password</Label>
-            <div className="relative mt-1">
-              <Input
-                id="password"
-                name="password"
-                type={showPassword ? "text" : "password"}
-                required
-                className="bg-gray-900 border-gray-700 text-white pr-10"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <button
-                type="button"
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? (
-                  <EyeOff className="h-5 w-5" />
-                ) : (
-                  <Eye className="h-5 w-5" />
-                )}
-              </button>
-            </div>
-          </div>
-          {!isLogin && (
-            <div>
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
-              <Input
-                id="confirmPassword"
-                name="confirmPassword"
-                type="password"
-                required
-                className="mt-1 bg-gray-900 border-gray-700 text-white"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </div>
-          )}
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-          <div>
-            <Button
-              type="submit"
-              className="w-full bg-white text-black hover:bg-gray-200"
-            >
-              {isLogin ? "Sign In" : "Sign Up"}
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-        </form>
-
-        <div className="flex items-center justify-between">
-          <button
-            type="button"
-            className="text-sm text-gray-400 hover:text-white"
-            onClick={() => {
-              setIsLogin(!isLogin);
-              setError("");
-              setEmail("");
-              setPassword("");
-              setName("");
-              setConfirmPassword("");
-            }}
-          >
-            {isLogin
-              ? "Need an account? Sign Up"
-              : "Already have an account? Sign In"}
-          </button>
-          {isLogin && (
-            <button
-              type="button"
-              className="text-sm text-gray-400 hover:text-white"
-              onClick={() => {
-                setShowForgotPassword(true);
-                setError("");
-                setEmail("");
-              }}
-            >
-              Forgot password?
-            </button>
-          )}
-        </div>
-
-        {showForgotPassword && (
-          <Dialog
-            open={showForgotPassword}
-            onOpenChange={setShowForgotPassword}
-          >
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Reset Password</DialogTitle>
-                <DialogDescription>
-                  Enter your email address to receive a password reset link.
-                </DialogDescription>
-              </DialogHeader>
-              <form onSubmit={handleForgotPassword}>
-                <Input
-                  type="email"
-                  placeholder="Email"
-                  value={forgotPasswordEmail}
-                  onChange={(e) => setForgotPasswordEmail(e.target.value)}
-                />
-                <Button type="submit" className="mt-4">
-                  Send Reset Link
-                </Button>
-              </form>
-              {forgotPasswordSubmitted && (
-                <p className="text-green-500 text-sm">
-                  Check your email for the reset link.
-                </p>
-              )}
-              <Button onClick={resetForgotPassword} className="mt-2">
-                <X className="mr-2" /> Close
-              </Button>
-            </DialogContent>
-          </Dialog>
-        )}
-      </div>
-    </div>
+    <div></div>
+    //   <Login />
+    //   <Register />
+    // </div>
   );
 }
 

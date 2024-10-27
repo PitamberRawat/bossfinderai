@@ -359,9 +359,13 @@ export default function Signin() {
       default:
         return (
           <>
-            <h1 className="text-center -mt-7 text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-              Pricing
-            </h1>
+            {detailsOfUser.credits > 0 ? (
+              <h1 className="text-center -mt-7 text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+                Pricing
+              </h1>
+            ) : (
+              <></>
+            )}
             <div
               style={{
                 display: "flex",
@@ -669,161 +673,263 @@ export default function Signin() {
   return (
     <>
       <ToastContainer />
-      <div
-        className="flex  text-white font-inter"
-        style={{
-          backgroundColor: "rgb(17,24,39)",
-          minHeight: "100vh",
-        }}
-      >
-        {/* Navigation Sidebar */}
-
+      {detailsOfUser.credits > 0 ? (
         <div
+          className="flex  text-white font-inter"
           style={{
-            display: "flex",
-            width: "100%",
-            flexDirection: "column",
             backgroundColor: "rgb(17,24,39)",
+            minHeight: "100vh",
           }}
         >
-          {/* Main Content Area */}
-          <div className="flex    flex-col">
-            {/* Top Bar */}
-            <header className="header-content-area bg-gray-900 border-b border-gray-800 flex justify-between items-center">
-              <div className="flex items-center justify-center mb-2">
-                <span className="logotext text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-                  BossFindr
-                </span>
-                <div style={{ display: "flex", height: "100px" }}>
-                  <img src={bfalogo} alt="" className="logoimgdashboard" />
+          {/* Navigation Sidebar */}
+
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              flexDirection: "column",
+              backgroundColor: "rgb(17,24,39)",
+            }}
+          >
+            {/* Main Content Area */}
+            <div className="flex    flex-col">
+              {/* Top Bar */}
+              <header className="header-content-area bg-gray-900 border-b border-gray-800 flex justify-between items-center">
+                <div className="flex items-center justify-center mb-2">
+                  <span className="logotext text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+                    BossFindr
+                  </span>
+                  <div style={{ display: "flex", height: "100px" }}>
+                    <img src={bfalogo} alt="" className="logoimgdashboard" />
+                  </div>
                 </div>
-              </div>
-              <div className="inputsearch flex items-center space-x-2">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-gray-400 hover:text-white"
+                <div className="inputsearch flex items-center space-x-2">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-gray-400 hover:text-white"
+                  >
+                    <Search className="h-5 w-5" />
+                  </Button>
+                  <Input
+                    placeholder="Search..."
+                    className=" bg-gray-800 border-gray-700 text-white  focus:border-purple-500 focus:ring-purple-500"
+                  />
+                </div>
+                <div className="flex items-center space-x-4">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-gray-400 hover:text-white relative"
+                  >
+                    <Bell className="h-5 w-5" />
+                    <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
+                  </Button>
+                  <button className="auth-btn" onClick={handleLogout}>
+                    Log out
+                  </button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        className="relative h-8 w-8 rounded-full"
+                      >
+                        <img
+                          className="rounded-full"
+                          src="/placeholder.svg?height=32&width=32"
+                          alt="User"
+                        />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      className="w-56"
+                      align="end"
+                      forceMount
+                    >
+                      <DropdownMenuLabel className="font-normal">
+                        <div className="flex flex-col space-y-1">
+                          <p className="text-sm font-medium leading-none">
+                            John Doe
+                          </p>
+                          <p className="text-xs leading-none text-muted-foreground">
+                            john@example.com
+                          </p>
+                        </div>
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem>Profile</DropdownMenuItem>
+                      <DropdownMenuItem>Billing</DropdownMenuItem>
+                      <DropdownMenuItem>Settings</DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem>Log out</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              </header>
+
+              {/* Content */}
+              <main className="w-full main-content-area flex from-gray-900 to-black ">
+                <nav className="nav-content-area bg-gray-900 p-1 border-r border-gray-800">
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
+                    onClick={() => setActiveSection("dashboard")}
+                  >
+                    <Home className="mr-2 h-4 w-4" />
+                    <span className="nav-span-text">Dashboard</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
+                    onClick={() => setActiveSection("profile")}
+                  >
+                    <User className="mr-2 h-4 w-4" />
+                    <span className="nav-span-text">Profile</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
+                    onClick={() => setActiveSection("pricing")}
+                  >
+                    <DollarSign className="mr-2 h-4 w-4" />
+                    <span className="nav-span-text">Pricing</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
+                    onClick={() => setActiveSection("findBoss")}
+                  >
+                    <Briefcase className="mr-2 h-4 w-4" />
+                    <span className="nav-span-text">Find Your Next Boss</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
+                    onClick={() => setActiveSection("settings")}
+                  >
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span className="nav-span-text">Settings</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
+                    onClick={() => setActiveSection("help")}
+                  >
+                    <HelpCircle className="mr-2 h-4 w-4" />
+                    <span className="nav-span-text">Help & Support</span>
+                  </Button>
+                </nav>
+                <div
+                  style={{
+                    marginTop: "30px",
+                    width: "100%",
+                  }}
                 >
-                  <Search className="h-5 w-5" />
-                </Button>
-                <Input
-                  placeholder="Search..."
-                  className=" bg-gray-800 border-gray-700 text-white  focus:border-purple-500 focus:ring-purple-500"
-                />
-              </div>
-              <div className="flex items-center space-x-4">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-gray-400 hover:text-white relative"
-                >
-                  <Bell className="h-5 w-5" />
-                  <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
-                </Button>
-                <button className="auth-btn" onClick={handleLogout}>
-                  Log out
-                </button>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
+                  {renderContent()}
+                </div>
+              </main>
+            </div>
+
+            {/* <TelegramChat /> */}
+          </div>
+        </div>
+      ) : (
+        <>
+          <div
+            className="flex  text-white font-inter"
+            style={{
+              backgroundColor: "rgb(17,24,39)",
+              minHeight: "100vh",
+            }}
+          >
+            {/* Navigation Sidebar */}
+
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                flexDirection: "column",
+                backgroundColor: "rgb(17,24,39)",
+              }}
+            >
+              {/* Main Content Area */}
+              <div className="flex  flex-col">
+                {/* Top Bar */}
+                <header className="header-content-area bg-gray-900 border-b border-gray-800 flex justify-between items-center">
+                  <div className="flex items-center justify-center mb-2">
+                    <div style={{ display: "flex", height: "100px" }}>
+                      <img src={bfalogo} alt="" />
+                    </div>
+                  </div>
+                  <h1 className="pl-2 text-3xl font-bold  bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+                    Pricing
+                  </h1>
+                  <div className="flex items-center space-x-4">
                     <Button
                       variant="ghost"
-                      className="relative h-8 w-8 rounded-full"
+                      size="icon"
+                      className="text-gray-400 hover:text-white relative"
                     >
-                      <img
-                        className="rounded-full"
-                        src="/placeholder.svg?height=32&width=32"
-                        alt="User"
-                      />
+                      <Bell className="h-5 w-5" />
+                      <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
                     </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56" align="end" forceMount>
-                    <DropdownMenuLabel className="font-normal">
-                      <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">
-                          John Doe
-                        </p>
-                        <p className="text-xs leading-none text-muted-foreground">
-                          john@example.com
-                        </p>
-                      </div>
-                    </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>Profile</DropdownMenuItem>
-                    <DropdownMenuItem>Billing</DropdownMenuItem>
-                    <DropdownMenuItem>Settings</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>Log out</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            </header>
+                    <button className="auth-btn" onClick={handleLogout}>
+                      Log out
+                    </button>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          className="relative h-8 w-8 rounded-full"
+                        >
+                          <img
+                            className="rounded-full"
+                            src="/placeholder.svg?height=32&width=32"
+                            alt="User"
+                          />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent
+                        className="w-56"
+                        align="end"
+                        forceMount
+                      >
+                        <DropdownMenuLabel className="font-normal">
+                          <div className="flex flex-col space-y-1">
+                            <p className="text-sm font-medium leading-none">
+                              John Doe
+                            </p>
+                            <p className="text-xs leading-none text-muted-foreground">
+                              john@example.com
+                            </p>
+                          </div>
+                        </DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>Profile</DropdownMenuItem>
+                        <DropdownMenuItem>Billing</DropdownMenuItem>
+                        <DropdownMenuItem>Settings</DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>Log out</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                </header>
 
-            {/* Content */}
-            <main className="w-full main-content-area flex from-gray-900 to-black ">
-              <nav className="nav-content-area bg-gray-900 p-1 border-r border-gray-800">
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
-                  onClick={() => setActiveSection("dashboard")}
+                <div
+                  style={{
+                    marginTop: "30px",
+                    width: "100%",
+                  }}
                 >
-                  <Home className="mr-2 h-4 w-4" />
-                  <span className="nav-span-text">Dashboard</span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
-                  onClick={() => setActiveSection("profile")}
-                >
-                  <User className="mr-2 h-4 w-4" />
-                  <span className="nav-span-text">Profile</span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
-                  onClick={() => setActiveSection("pricing")}
-                >
-                  <DollarSign className="mr-2 h-4 w-4" />
-                  <span className="nav-span-text">Pricing</span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
-                  onClick={() => setActiveSection("findBoss")}
-                >
-                  <Briefcase className="mr-2 h-4 w-4" />
-                  <span className="nav-span-text">Find Your Next Boss</span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
-                  onClick={() => setActiveSection("settings")}
-                >
-                  <Settings className="mr-2 h-4 w-4" />
-                  <span className="nav-span-text">Settings</span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start text-white hover:bg-gray-800 hover:text-purple-400 transition-colors"
-                  onClick={() => setActiveSection("help")}
-                >
-                  <HelpCircle className="mr-2 h-4 w-4" />
-                  <span className="nav-span-text">Help & Support</span>
-                </Button>
-              </nav>
-              <div
-                style={{
-                  marginTop: "30px",
-                  width: "100%",
-                }}
-              >
-                {renderContent()}
+                  {renderContent()}
+                </div>
               </div>
-            </main>
+
+              {/* <TelegramChat /> */}
+            </div>
           </div>
-
-          {/* <TelegramChat /> */}
-        </div>
-      </div>
+        </>
+      )}
     </>
   );
 }
