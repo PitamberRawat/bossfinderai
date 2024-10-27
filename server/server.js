@@ -193,8 +193,8 @@ app.post("/create-checkout-session", async (req, res) => {
       ],
       mode: billingType === "subscription" ? "subscription" : "payment",
       success_url:
-        "https://bfai.netlify.app/success?session_id={CHECKOUT_SESSION_ID}", // Redirect URL on success
-      cancel_url: "https://bfai.netlify.app/cancel", // Redirect URL on cancel
+        "https://bossfinderai.netlify.app/success?session_id={CHECKOUT_SESSION_ID}", // Redirect URL on success
+      cancel_url: "https://bossfinderai.netlify.app/cancel", // Redirect URL on cancel
       metadata: { userId }, // Add userId to metadata for later use in webhook
     });
 
