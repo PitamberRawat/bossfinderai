@@ -21,7 +21,7 @@ const ProtectedRoute = ({ children }) => {
     return <div>Loading...</div>; // You can customize this
   }
 
-  return user ? children : <Navigate to="/auth" />; // Replace '/auth' with your actual login route
+  return user ? children : <Navigate to="/register" />; // Replace '/auth' with your actual login route
 };
 
 export default ProtectedRoute;

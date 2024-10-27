@@ -1,20 +1,20 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Homepage from "./Homepage";
-import AuthPage from "./components/AuthPage";
 import Signin from "./components/Signin";
 import Success from "./Success";
 import Cancel from "./Cancel";
 import CheckoutPage from "./components/CheckoutPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route path="/register" element={<AuthPage isLoginn={false} />} />
-        <Route path="/login" element={<AuthPage isLoginn={true} />} />
-        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/signin" element={<Signin />} />
         <Route
           path="/checkoutpage"

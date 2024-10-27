@@ -66,7 +66,7 @@ const Success = () => {
             </p>
           </>
         )}
-        <a
+        <div
           onClick={() => navigate("/signin")}
           style={styles.button}
           onMouseEnter={(e) =>
@@ -78,7 +78,7 @@ const Success = () => {
           }
         >
           Go to Homepage
-        </a>
+        </div>
       </div>
     </div>
   );

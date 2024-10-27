@@ -279,7 +279,7 @@ const Homepage = () => {
                 <div className="button-section">
                   <a
                     onClick={() => {
-                      navigate("/auth");
+                      navigate("/register");
                     }}
                     className="claim-button-top"
                   >
