@@ -49,7 +49,7 @@ export default function Signin() {
   const navigate = useNavigate();
   const location = useLocation();
   const [detailsOfUser, setDetailsOfUser] = useState(null);
-  const [name, setName] = useState("jhon doe");
+  const [name, setName] = useState("");
   const [bossLink, setBossLink] = useState("");
   const [showThankYou, setShowThankYou] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -101,6 +101,11 @@ export default function Signin() {
     // Cleanup the listener when the component unmounts
     return () => unsubscribe();
   }, [location.state, navigate]);
+  useEffect(() => {
+    if (detailsOfUser) {
+      setName(detailsOfUser.name);
+    }
+  }, [detailsOfUser]);
 
   useEffect(() => {
     setDate(
@@ -125,10 +130,9 @@ export default function Signin() {
   const handleBossLinkSubmit = (e) => {
     e.preventDefault();
     setShowThankYou(true);
-    toast({
-      title: "Link Submitted",
-      description: "You will receive the details of your boss shortly.",
-    });
+    toast.success(
+      "Thank You! We're working on finding your new boss and will share the top matches on your email soon"
+    );
   };
 
   if (loading) {
@@ -251,7 +255,7 @@ export default function Signin() {
                 <Button
                   onClick={handleResetPassword}
                   variant="outline"
-                  className="text-white border-white hover:bg-gray-800"
+                  className="text-black border-white hover:bg-gray-800"
                 >
                   Reset Password
                 </Button>
