@@ -24,8 +24,14 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  if (req.originalUrl === "/webhook") {
-    next(); // Skip body-parser for this route
+  if (req.originalUrl === "/stripe-webhook") {
+    // For the webhook route, use a custom middleware to capture the raw body
+    const buffer = [];
+    req.on("data", (chunk) => buffer.push(chunk));
+    req.on("end", () => {
+      req.rawBody = Buffer.concat(buffer).toString(); // Set rawBody
+      next();
+    });
   } else {
     bodyParser.json()(req, res, next); // Use body-parser for other routes
   }
