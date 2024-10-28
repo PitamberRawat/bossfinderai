@@ -85,7 +85,7 @@ app.post("/stripe-webhook", async (req, res) => {
   const sig = req.headers["stripe-signature"];
   try {
     event = stripe.webhooks.constructEvent(
-      req.body,
+      req.rawBody,
       sig,
       process.env.STRIPE_WEBHOOK_SECRET
     );
