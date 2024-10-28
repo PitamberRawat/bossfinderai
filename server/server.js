@@ -83,6 +83,8 @@ app.post("/stripe-webhook", async (req, res) => {
       sig,
       process.env.STRIPE_WEBHOOK_SECRET
     );
+    console.log("Webhook received: ", event.type);
+
     if (event.type === "checkout.session.completed") {
       const session = event.data.object; // Contains the session details
       const userId = session.metadata.userId; // Retrieve userId from metadata
@@ -122,10 +124,15 @@ async function updateFields(userId, amount) {
 
   // Update the Firestore user's credits
   const userRef = admin.firestore().collection("users").doc(userId);
-  await userRef.update({
-    credits: admin.firestore.FieldValue.increment(creditsToAdd),
-    plan: plan,
-  });
+  try {
+    await userRef.update({
+      credits: admin.firestore.FieldValue.increment(creditsToAdd),
+      plan: plan,
+    });
+    console.log("Firestore updated successfully");
+  } catch (error) {
+    console.error("Firestore update failed:", error);
+  }
 }
 
 const PORT = process.env.PORT;
