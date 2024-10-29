@@ -36,7 +36,7 @@ const products = [
       "• Look For Upto 5 Jobs",
     ],
     billingType: "payment",
-    priceId: process.env.PRICE_ID_BASIC,
+    priceId: "price_1QF8BmRw8r3Vx2XaZbAHqwl3",
   },
   {
     id: 2,
@@ -51,7 +51,7 @@ const products = [
     price: "19",
     name: "Standard",
     billingType: "subscription",
-    priceId: process.env.PRICE_ID_STANDARD,
+    priceId: "price_1QF8EARw8r3Vx2Xa28b7nge1",
   },
   {
     id: 3,
@@ -67,7 +67,7 @@ const products = [
     image: premium,
     name: "Premium",
     billingType: "payment",
-    priceId: process.env.PRICE_ID_PREMIUM,
+    priceId: "price_1QF8FERw8r3Vx2Xa1EEZYydI",
   },
 ];
 
