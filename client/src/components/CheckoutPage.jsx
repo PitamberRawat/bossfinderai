@@ -17,7 +17,9 @@ import {
 } from "lucide-react";
 import bfalogo from "../assets/bfalogo.png";
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
+const stripePromise = loadStripe(
+  "pk_live_51Q1A3MRw8r3Vx2XawqJw5vLjGJjlqh81j4t8cKETx5eeFWbE4v3HFnOfVgtD7a2EsH2n988nwjCbUilrFsarMFWO00tgKJPnhR"
+);
 
 const products = [
   {
