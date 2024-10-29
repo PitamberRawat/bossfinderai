@@ -29,7 +29,7 @@ const products = [
     features: [
       "• 5 Credits",
 
-      "• Get Top 2 Matches per search",
+      "•  Get Top 2 Matches per search",
 
       "• Look For Upto 5 Jobs",
     ],
