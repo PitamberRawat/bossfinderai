@@ -111,6 +111,10 @@ const Login = () => {
     setForgotPasswordEmail("");
     setForgotPasswordSubmitted(false);
   };
+  const handleClose = () => {
+    resetForgotPassword();
+    setShowForgotPassword(!showForgotPassword);
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black text-white p-4">
@@ -229,7 +233,7 @@ const Login = () => {
                   Check your email for the reset link.
                 </p>
               )}
-              <Button onClick={resetForgotPassword} className="mt-2">
+              <Button onClick={handleClose} className="mt-2">
                 <X className="mr-2" /> Close
               </Button>
             </DialogContent>

@@ -679,4 +679,12 @@
     font-weight: bold;
     border-radius: 12px;
   }
+  @keyframes infinite-reverse-scroll {
+    0% {
+      transform: translateX(0); /* Start from the first image */
+    }
+    100% {
+      transform: translateX(-500%); /* Move to the last image */
+    }
+  }
 }

@@ -122,7 +122,7 @@ const Pricing = () => {
                   </div>
                 </div>
                 <a
-                  onClick={() => navigate("/checkoutpage")}
+                  onClick={() => navigate("/register")}
                   href=""
                   className="btn-anchor"
                 >
@@ -227,7 +227,7 @@ const Pricing = () => {
                   </div>
                 </div>
                 <a
-                  onClick={() => navigate("/checkoutpage")}
+                  onClick={() => navigate("/register")}
                   href=""
                   className="btn-anchor"
                   style={{ backgroundColor: "white" }}
@@ -329,7 +329,7 @@ const Pricing = () => {
                 </div>
               </div>
               <a
-                onClick={() => navigate("/checkoutpage")}
+                onClick={() => navigate("/register")}
                 href=""
                 className="btn-anchor"
               >

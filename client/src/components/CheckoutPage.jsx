@@ -16,9 +16,8 @@ import {
   Sparkle,
 } from "lucide-react";
 import bfalogo from "../assets/bfalogo.png";
-const stripePromise = loadStripe(
-  "pk_test_51Q1A3MRw8r3Vx2XaZ5foTvPbqzA9mHzHXhpuCHUglltHjhIYMb5FxY0q1gJLwsJOV9PzBypVzw2MARd7UBl5Euih00TQGsoMiD"
-);
+
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const products = [
   {
@@ -35,7 +34,7 @@ const products = [
       "• Look For Upto 5 Jobs",
     ],
     billingType: "payment",
-    priceId: "price_1QAl44Rw8r3Vx2XaUjBTrb2A",
+    priceId: process.env.PRICE_ID_BASIC,
   },
   {
     id: 2,
@@ -50,7 +49,7 @@ const products = [
     price: "19",
     name: "Standard",
     billingType: "subscription",
-    priceId: "price_1QAl5VRw8r3Vx2XaDWCOvwqo",
+    priceId: process.env.PRICE_ID_STANDARD,
   },
   {
     id: 3,
@@ -66,7 +65,7 @@ const products = [
     image: premium,
     name: "Premium",
     billingType: "payment",
-    priceId: "price_1QAl60Rw8r3Vx2XasJswcHT0",
+    priceId: process.env.PRICE_ID_PREMIUM,
   },
 ];
 
