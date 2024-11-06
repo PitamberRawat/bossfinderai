@@ -44,6 +44,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { doc, getDoc } from "firebase/firestore";
 import bfalogo from "../assets/bfalogo.png";
 import "./Signin.css";
+import Chat from "./Chat";
 
 export default function Signin() {
   const navigate = useNavigate();
@@ -90,6 +91,7 @@ export default function Signin() {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         // If the user is logged in, fetch the user data from Firestore
+
         fetchUserData(currentUser.uid);
       } else {
         // If no user is logged in, redirect to the login page or show a message
@@ -127,12 +129,36 @@ export default function Signin() {
     }
   };
 
-  const handleBossLinkSubmit = (e) => {
+  const handleBossLinkSubmit = async (e) => {
     e.preventDefault();
     setShowThankYou(true);
     toast.success(
       "Thank You! We're working on finding your new boss and will share the top matches on your email soon"
     );
+    try {
+      const response = await fetch(
+        "https://bossfinderai1.onrender.com/msgtelegram",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: auth.currentUser.email,
+            message: bossLink,
+          }), // Send the message in the request body
+        }
+      );
+
+      if (response.ok) {
+        alert("Message sent to Telegram!");
+      } else {
+        alert("Failed to send message.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred while sending the message.");
+    }
   };
 
   if (loading) {
@@ -319,9 +345,6 @@ export default function Signin() {
       case "settings":
         return (
           <>
-            <h1 className="pl-4 text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-              Settings
-            </h1>
             <Card className="bg-gray-900 text-white border-gray-800">
               <CardHeader>
                 <CardTitle>Coming Soon</CardTitle>
@@ -341,23 +364,10 @@ export default function Signin() {
       case "help":
         return (
           <>
-            <h1 className="pl-4 text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+            <h1 className="help-class  text-3xl font-bold  bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
               Help & Support
             </h1>
-            <Card className="bg-gray-900 text-white border-gray-800">
-              <CardHeader>
-                <CardTitle>Coming Soon</CardTitle>
-                <CardDescription className="text-gray-400">
-                  This feature is under development
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p>
-                  We're working hard to bring you new exciting features. Stay
-                  tuned!
-                </p>
-              </CardContent>
-            </Card>
+            <Chat uid={auth.currentUser.uid} />
           </>
         );
       default:

@@ -132,7 +132,7 @@ const CheckoutPage = () => {
       <header className="header">
         <img src={bfalogo} alt="Company bfaLogo" className="logo" />
       </header>
-      <div className="container">
+      <div className="main-price-container">
         <h1 className="heading">Select Your Plan</h1>
         <div>
           {/* {selectedProduct && (

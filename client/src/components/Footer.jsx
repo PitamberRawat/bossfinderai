@@ -2,7 +2,9 @@ import x from "../assets/x.svg";
 import at from "../assets/@.svg";
 import i from "../assets/in.svg";
 import "./Footer.css";
+import { useNavigate } from "react-router-dom";
 const Footer = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="footer-container">
@@ -144,7 +146,10 @@ const Footer = () => {
             </a>
           </div>
 
-          <div className="contact-section">
+          <div
+            onClick={() => navigate("/register")}
+            className="contact-section"
+          >
             <div className="book-text">
               <p style={{ fontWeight: "700" }}>
                 Email your hiring manager today!
